@@ -1,0 +1,42 @@
+[
+  {
+    "name": "GraphRM",
+    "value": 10
+  },
+  {
+    "name": "RomaJS",
+    "value": 13
+  },
+  {
+    "name": "Rust Roma",
+    "value": 7
+  },
+  {
+    "name": "Lambda-Roma",
+    "value": 15
+  },
+  {
+    "name": "Blockchain Roma",
+    "value": 15
+  },
+  {
+    "name": "Machine Learning/Data Science Meetup",
+    "value": 15
+  },
+  {
+    "name": "DotNetCode",
+    "value": 14
+  },
+  {
+    "name": "Il Meetup WordPress di Roma",
+    "value": 14
+  },
+  {
+    "name": "AgileTalks",
+    "value": 13
+  },
+  {
+    "name": "Elixir-Roma",
+    "value": 9
+  }
+]
