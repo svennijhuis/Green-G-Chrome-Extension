@@ -1,15 +1,18 @@
 import * as d3 from "d3";
-import { useState, useEffect } from "react";
+import { svg } from "d3";
+import { useState, useEffect, useRef } from "react";
 
 const forceStrength = 0.03;
 
-const width = 940;
-const height = 600;
-const center = { x: width / 2, y: height / 2 };
+// const width = 940;
+// const height = 600;
+// const center = { x: width / 2, y: height / 2 };
 
 const colorFn = d3.scaleLinear().domain([7, 15]).range(["#d84b2a", "#7aa25c"]);
 
-function startSimulation(bubbles, updateState) {
+function startSimulation(bubbles, updateState, width, height) {
+  const center = { x: width / 2, y: height / 2 };
+
   function charge(d) {
     return -Math.pow(d.radius, 2.0) * forceStrength;
   }
@@ -27,16 +30,12 @@ function startSimulation(bubbles, updateState) {
   simulation.alpha(1).restart();
 }
 
-function formatBubbleData(rawData) {
+function formatBubbleData(rawData, width, height) {
   const maxValue = d3.max(rawData, function (d) {
     return +d.value;
   });
 
-  const radiusScale = d3
-    .scalePow()
-    .exponent(0.5)
-    .range([2, 85])
-    .domain([0, maxValue]);
+  const radiusScale = d3.scalePow().exponent(0.5).range([2, 85]).domain([0, maxValue]);
 
   const myBubbles = rawData.map((d) => ({
     name: d.name,
@@ -55,16 +54,41 @@ function formatBubbleData(rawData) {
 }
 
 function BubbleChart({ data }) {
+  // useRef is react, hook which allows me to get a reference to the svg html element
+  const ref = useRef();
   const [bubbles, setBubbles] = useState([]);
 
   useEffect(() => {
-    startSimulation(formatBubbleData(data), (bubbles) => {
-      setBubbles(() => [...bubbles]);
-    });
+    // if the svg element exists, then start the simulation
+    if (ref.current) {
+      const width = ref.current.clientWidth;
+      const height = ref.current.clientHeight;
+      // needs the real width and height
+      startSimulation(
+        formatBubbleData(data, width, height),
+        (bubbles) => {
+          setBubbles(() => [...bubbles]);
+        },
+        // startSimulation also needs width and heigth parameter to calculate the center
+        width,
+        height
+      );
+    }
   }, [data]);
 
+  // .attr("preserveAspectRatio", "xMinYMin meet")
+  // .attr("viewBox", "0 0 960 500")
+
   return (
-    <svg width={width} height={height}>
+    // left ref is the html attribute, right ref is the variable of line 56, which connect each other
+    <svg
+      ref={ref}
+      width="100%"
+      height="100%"
+      // correct viewbox according to ratio
+      viewBox="0 0 1920 937"
+      preserveAspectRatio="xMinYMin meet"
+    >
       {bubbles.map((bubble) => {
         return (
           <circle
