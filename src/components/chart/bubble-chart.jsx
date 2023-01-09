@@ -76,16 +76,13 @@ function BubbleChart({ data }) {
     }
   }, [data]);
 
-  // .attr("preserveAspectRatio", "xMinYMin meet")
-  // .attr("viewBox", "0 0 960 500")
-
   return (
     // left ref is the html attribute, right ref is the variable of line 56, which connect each other
     <svg
       ref={ref}
       width="100%"
       height="100%"
-      // correct viewbox according to ratio
+      // correct viewbox according to ratio, used for size: https://whatismyviewport.com/
       viewBox="0 0 1920 937"
       preserveAspectRatio="xMinYMin meet"
     >
