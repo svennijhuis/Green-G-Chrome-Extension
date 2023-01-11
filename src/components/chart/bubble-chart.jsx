@@ -45,8 +45,7 @@ var json = {
   ],
 };
 
-var diameter = 350;
-// color = d3.scaleOrdinal(d3.schemeCategory20c);
+var diameter = 400;
 
 var colorScale = d3
   .scaleLinear()
@@ -56,16 +55,9 @@ var colorScale = d3
       return d.value;
     }),
   ])
-  .range(["rgb(46, 73, 123)", "rgb(71, 187, 94)"]);
+  .range(["rgb(233,150,122)", "	rgb(139,0,0)"]);
 
 var bubble = d3.pack().size([diameter, diameter]).padding(5);
-
-var margin = {
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
-};
 
 var root = d3
   .hierarchy(json)
@@ -86,16 +78,11 @@ const myBubbles = root.children.map((d) => ({
   y: d.y,
 }));
 
-console.log(root.children);
-console.log(myBubbles);
+console.log(colorScale);
 
 function BubbleChart() {
   return (
-    <svg
-      className="chart-svg"
-      width={diameter + margin.right}
-      height={diameter}
-    >
+    <svg className="chart-svg" width={diameter} height={diameter}>
       {myBubbles.map((item, index) => (
         <g
           className={styles.node}
@@ -103,7 +90,7 @@ function BubbleChart() {
           transform={`translate(${item.x + " " + item.y})`}
         >
           <g className={styles.graph}>
-            <circle r={item.r} />
+            <circle r={item.r} style={{ fill: `${colorScale(item.value)}` }} />
             <text
               dy=".3em"
               style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}

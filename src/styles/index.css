@@ -2,15 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
+body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #17171a;
-} */
+  background-color: #17171a; */
+
+  display: flex;
+  justify-content: center;
+}
 
 text {
   font: 16px sans-serif;
@@ -22,14 +25,29 @@ text {
   fill: #000;
 }
 
-.chart {
-  max-width: 600px;
-  max-height: 600px;
+.chart-svg {
+  /* background: #fff2f2;
+  border-radius: 50%;
+  border: 1px solid white;
+  box-shadow: 0 0 30px 3px #e78267; */
 }
 
+.lf-player-container {
+  display: flex;
+}
+
+.player-car {
+  margin-right: auto !important;
+  margin-left: 20px !important;
+}
+/* .chart {
+  max-width: 600px;
+  max-height: 600px;
+} */
+
 .chart-svg {
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
 }
 
 @keyframes animateIn {
