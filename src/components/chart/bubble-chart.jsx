@@ -1,106 +1,118 @@
 import * as d3 from "d3";
-import { svg } from "d3";
-import { useState, useEffect, useRef } from "react";
+import styles from "./Chart.module.scss";
 
-const forceStrength = 0.03;
+var json = {
+  children: [
+    { name: "Apples", value: 70 },
+    { name: "Oranges", value: 44 },
+    { name: "Kiwis", value: 65 },
+    { name: "Bananas", value: 39 },
+    { name: "Pears", value: 10 },
+    { name: "Satsumas", value: 25 },
+    { name: "Pineapples", value: 30 },
+    { name: "Apples", value: 70 },
+    { name: "Oranges", value: 44 },
+    { name: "Kiwis", value: 65 },
+    { name: "Bananas", value: 39 },
+    { name: "Pears", value: 10 },
+    { name: "Satsumas", value: 25 },
+    { name: "Pineapples", value: 30 },
+    { name: "Apples", value: 70 },
+    { name: "Oranges", value: 44 },
+    { name: "Kiwis", value: 65 },
+    { name: "Bananas", value: 39 },
+    { name: "Pears", value: 10 },
+    { name: "Satsumas", value: 25 },
+    { name: "Pineapples", value: 30 },
+    { name: "Satsumas", value: 25 },
+    { name: "Pineapples", value: 30 },
+    { name: "Apples", value: 70 },
+    { name: "Oranges", value: 44 },
+    { name: "Kiwis", value: 65 },
+    { name: "Bananas", value: 39 },
+    { name: "Pears", value: 10 },
+    { name: "Satsumas", value: 25 },
+    { name: "Pineapples", value: 30 },
+    { name: "Satsumas", value: 25 },
+    { name: "Pineapples", value: 30 },
+    { name: "Apples", value: 70 },
+    { name: "Oranges", value: 44 },
+    { name: "Kiwis", value: 65 },
+    { name: "Bananas", value: 39 },
+    { name: "Pears", value: 10 },
+    { name: "Satsumas", value: 25 },
+    { name: "Pineapples", value: 30 },
+  ],
+};
 
-// const width = 940;
-// const height = 600;
-// const center = { x: width / 2, y: height / 2 };
+var diameter = 350;
+// color = d3.scaleOrdinal(d3.schemeCategory20c);
 
-const colorFn = d3.scaleLinear().domain([7, 15]).range(["#d84b2a", "#7aa25c"]);
+var colorScale = d3
+  .scaleLinear()
+  .domain([
+    0,
+    d3.max(json.children, function (d) {
+      return d.value;
+    }),
+  ])
+  .range(["rgb(46, 73, 123)", "rgb(71, 187, 94)"]);
 
-function startSimulation(bubbles, updateState, width, height) {
-  const center = { x: width / 2, y: height / 2 };
+var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
-  function charge(d) {
-    return -Math.pow(d.radius, 2.0) * forceStrength;
-  }
+var margin = {
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+};
 
-  const simulation = d3
-    .forceSimulation()
-    .velocityDecay(0.2)
-    .force("x", d3.forceX().strength(forceStrength).x(center.x))
-    .force("y", d3.forceY().strength(forceStrength).y(center.y))
-    .force("charge", d3.forceManyBody().strength(charge))
-    .on("tick", () => updateState(bubbles))
-    .stop();
-
-  simulation.nodes(bubbles);
-  simulation.alpha(1).restart();
-}
-
-function formatBubbleData(rawData, width, height) {
-  const maxValue = d3.max(rawData, function (d) {
-    return +d.value;
-  });
-
-  const radiusScale = d3.scalePow().exponent(0.5).range([2, 85]).domain([0, maxValue]);
-
-  const myBubbles = rawData.map((d) => ({
-    name: d.name,
-    value: d.value,
-    radius: radiusScale(d.value),
-    x: Math.random() * width,
-    y: Math.random() * height,
-  }));
-
-  // sort them to prevent occlusion of smaller nodes.
-  myBubbles.sort(function (a, b) {
+var root = d3
+  .hierarchy(json)
+  .sum(function (d) {
+    return d.value;
+  })
+  .sort(function (a, b) {
     return b.value - a.value;
   });
 
-  return myBubbles;
-}
+const dataBubble = bubble(root);
 
-function BubbleChart({ data }) {
-  // useRef is react, hook which allows me to get a reference to the svg html element
-  const ref = useRef();
-  const [bubbles, setBubbles] = useState([]);
+const myBubbles = root.children.map((d) => ({
+  name: d.data.name,
+  value: d.value,
+  r: d.r,
+  x: d.x,
+  y: d.y,
+}));
 
-  useEffect(() => {
-    // if the svg element exists, then start the simulation
-    if (ref.current) {
-      const width = ref.current.clientWidth;
-      const height = ref.current.clientHeight;
-      // needs the real width and height
-      startSimulation(
-        formatBubbleData(data, width, height),
-        (bubbles) => {
-          setBubbles(() => [...bubbles]);
-        },
-        // startSimulation also needs width and heigth parameter to calculate the center
-        width,
-        height
-      );
-    }
-  }, [data]);
+console.log(root.children);
+console.log(myBubbles);
 
+function BubbleChart() {
   return (
-    // left ref is the html attribute, right ref is the variable of line 56, which connect each other
     <svg
-      ref={ref}
-      width="100%"
-      height="100%"
-      // correct viewbox according to ratio, used for size: https://whatismyviewport.com/
-      viewBox="0 0 1920 937"
-      preserveAspectRatio="xMinYMin meet"
+      className="chart-svg"
+      width={diameter + margin.right}
+      height={diameter}
     >
-      {bubbles.map((bubble) => {
-        return (
-          <circle
-            key={bubble.name}
-            r={bubble.radius}
-            fill={colorFn(bubble.value)}
-            stroke={d3.rgb(colorFn(bubble.value)).darker()}
-            strokeWidth={2}
-            cx={bubble.x}
-            cy={bubble.y}
-          >
-            <title>{bubble.name}</title>
-          </circle>
-        );
-      })}
+      {myBubbles.map((item, index) => (
+        <g
+          className={styles.node}
+          key={index}
+          transform={`translate(${item.x + " " + item.y})`}
+        >
+          <g className={styles.graph}>
+            <circle r={item.r} />
+            <text
+              dy=".3em"
+              style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
+            >
+              {item.value}
+            </text>
+          </g>
+        </g>
+      ))}
     </svg>
   );
 }
