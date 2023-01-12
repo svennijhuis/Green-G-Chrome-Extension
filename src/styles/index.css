@@ -4,15 +4,7 @@
 
 body {
   margin: 0;
-  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #17171a; */
-
-  display: flex;
-  justify-content: center;
+  background-color: #7899ef;
 }
 
 text {
@@ -26,10 +18,9 @@ text {
 }
 
 .chart-svg {
-  /* background: #fff2f2;
+  background: #ffff;
   border-radius: 50%;
-  border: 1px solid white;
-  box-shadow: 0 0 30px 3px #e78267; */
+  outline: 5px solid #000;
 }
 
 .lf-player-container {
