@@ -5,10 +5,11 @@
 body {
   margin: 0;
   background-color: #7899ef;
+  font-family: "Inter", sans-serif;
 }
 
 text {
-  font: 16px sans-serif;
+  font: 16px;
   fill: #fff;
   transition: all 0.3s;
 }
@@ -20,7 +21,7 @@ text {
 .chart-svg {
   background: #ffff;
   border-radius: 50%;
-  outline: 5px solid #000;
+  outline: 3px solid #000;
 }
 
 .lf-player-container {
@@ -50,4 +51,22 @@ text {
     opacity: 1;
     transform: scale(1) rotate(0);
   }
+}
+
+.title-block {
+  background: #000;
+  border-radius: 10px;
+  transform: skew(22deg, 4deg);
+  border: 3px solid #fff;
+}
+
+h1 {
+  font-family: "Londrina Shadow", cursive;
+}
+
+h2,
+h3,
+h4,
+p {
+  font-family: "Inter", sans-serif;
 }
