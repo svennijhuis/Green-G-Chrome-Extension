@@ -12,9 +12,10 @@ function App() {
   const [useId, setId] = useState([]);
   const [useNextPageToken, setNextPageToken] = useState();
 
-  const client_id =
-    "750411911933-ds1g0hbuc5otlm8sbtckjs2m2001io3k.apps.googleusercontent.com";
-  const API_KEY = "AIzaSyAOlSbQdZVMgacpoOPT3HMSjvyLUjRiKEE";
+  const { CLIENT_ID, API_KEY } = process.env;
+
+
+  const client_id = CLIENT_ID;
   const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
 
   const handleCallbackResponse = (response) => {
