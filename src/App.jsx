@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import "@fontsource/inter";
+import GoogleLogin from "./components/layout/google-login";
+import AppLogin from "./components/layout/app-login copy";
 
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
@@ -92,6 +94,30 @@ function App() {
 
     // google.accounts.id.prompt();
   }, [useToken]);
+  if (Cookies.get("token") === undefined) {
+    return (
+      <section>
+        <GoogleLogin>
+          <div id="signInDiv"></div>
+        </GoogleLogin>
+      </section>
+    );
+  }
+  const a = true;
+
+  if (Cookies.get("keyFetch") === undefined) {
+    const personData = jwt_decode(Cookies.get("token"));
+    return (
+      <section>
+        <AppLogin name={personData.name}>
+          <button className="text-white text-15" onClick={creatData}>
+            Start met je avontuur met het legen van je mail box van{" "}
+            {personData.email}
+          </button>
+        </AppLogin>
+      </section>
+    );
+  }
 
   return (
     <section>
