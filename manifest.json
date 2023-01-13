@@ -1,0 +1,16 @@
+{
+  "name": "Green G",
+  "version": "1.0",
+  "permissions": ["identity"],
+  "description": "Green G",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Green G",
+    "default_popup": "scripts/html/index.html"
+  },
+  "oauth2": {
+    "client_id": "1063643514035-ogqu3husqs7su0nuifoks543eaq5va96.apps.googleusercontent.com",
+    "scopes": ["https://mail.google.com/", "https://www.googleapis.com/auth/drive"]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwk7DK4xqg0FWSXetS7WPpcpp660Zyw8go5+iWQGCxXclz/wg9gPeA4gyPiXrVPHwtrFgzon1lMa/4Kh74xwERN10DIDnJM3t9bAQY0iUYUW3/24mDEMYWJTEKvznTZGu3WlS1F4Hmz8MwUjKJC12CLk5owGcNEhpNK0i2n3+HkRXOfpOvIt0oghfdA+XY8fbm+8Rdg9hWhLXRElrBsb2Ph4kegi4eQYezzdLhrbZ84qjWOT3Q4YJkE5sOj1rfqWZi696l76HNamlArJp6bHdhOMq8szpQLcFiYG7TA0gbdFy/6rs1kbFxfnk2/LIA8w8+TdtHFSPn3ybUQ2lzl1EswIDAQAB"
+}
