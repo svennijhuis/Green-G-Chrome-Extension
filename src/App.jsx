@@ -12,10 +12,7 @@ function App() {
   const [useId, setId] = useState([]);
   const [useNextPageToken, setNextPageToken] = useState();
 
-  const { CLIENT_ID, API_KEY } = process.env;
-
-
-  const client_id = CLIENT_ID;
+  const client_id = import.meta.env.VITE_CLIENT_ID;
   const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
 
   const handleCallbackResponse = (response) => {
@@ -72,7 +69,7 @@ function App() {
     setTokenClient(
       google.accounts.oauth2.initTokenClient({
         client_id: client_id,
-        apiKey: API_KEY,
+        apiKey: import.meta.env.VITE_API_KEY,
         scope: SCOPES,
         callback: async (tokenResponse) => {
           Cookies.set("keyFetch", tokenResponse.access_token);
