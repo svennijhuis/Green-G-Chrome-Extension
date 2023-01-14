@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 import data from "../data/data.json";
 
@@ -20,23 +21,76 @@ const useDataContext = () => useContext(DataContext);
  * @returns {React.Provider<DataContext>}
  */
 const DataProvider = ({ children }) => {
-  const [useData, setData] = useState({});
+  const [messageIds, setMessageIds] = useState([]);
+  const [emails, setEmails] = useState([]);
+
+  const getMessageIds = async (token, collection = []) => {
+    const url = new URL(
+      "https://www.googleapis.com/gmail/v1/users/me/messages"
+    );
+
+    url.searchParams.set("maxResults", 15);
+
+    if (token) {
+      url.searchParams.set("pageToken", token);
+    }
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + Cookies.get("keyFetch"),
+      },
+    });
+
+    const data = await response.json();
+    const messageIds = data.messages.map(({ id }) => id);
+    collection = [...collection, ...messageIds];
+
+    if (data.nextPageToken && collection.length <= 1000) {
+      return getMessageIds(data.nextPageToken, collection);
+    }
+
+    return collection;
+  };
+
+  const getEmails = async (messageIds) => {
+    const requests = messageIds.map(async (id) => {
+      const response = await fetch(
+        `https://gmail.googleapis.com/gmail/v1/users/me/messages/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + Cookies.get("keyFetch"),
+          },
+        }
+      );
+
+      return response.json();
+    });
+
+    const emails = await Promise.allSettled(requests);
+    return emails
+      .filter(({ status }) => status === "fulfilled")
+      .map(({ value }) => value);
+  };
+
+  const getEmailData = async () => {
+    const messageIds = await getMessageIds();
+    setMessageIds(messageIds);
+  };
 
   useEffect(() => {
-    // const timer = setTimeout(() => {
-    //   setData(data);
-    // }, 5000);ç
-    // return () => clearTimeout(timer);
-    setData(data);
-  }, [useData]);
-
-  console.log(useData);
+    getEmails(messageIds).then((emails) => {
+      setEmails(emails);
+    });
+  }, [messageIds]);
 
   return (
     <DataContext.Provider
       value={{
-        useData,
-        setData,
+        emails,
+        messageIds,
+        getEmailData,
       }}
     >
       {children}
