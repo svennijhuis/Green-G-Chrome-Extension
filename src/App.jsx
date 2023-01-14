@@ -7,12 +7,15 @@ import Cookies from "js-cookie";
 import "@fontsource/inter";
 import GoogleLogin from "./components/layout/google-login";
 import AppLogin from "./components/layout/app-login copy";
+import { useDataContext } from "./context/data";
 
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
+  const [useFetch, setFetch] = useState(Cookies.get("keyFetch"));
   const [tokenClient, setTokenClient] = useState({});
-  const [useId, setId] = useState([]);
   const [useNextPageToken, setNextPageToken] = useState();
+
+  const { emails, getEmailData } = useDataContext();
 
   const client_id = import.meta.env.VITE_CLIENT_ID;
   const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
@@ -33,29 +36,9 @@ function App() {
     tokenClient.requestAccessToken();
   };
 
-  const creatDataList = (token) => {
-    /* global google */
-    fetch(`https://www.googleapis.com/gmail/v1/users/me/messages`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + Cookies.get("keyFetch"),
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        let dataList = data;
-        let final = dataList.messages.map((d) => d.id);
-
-        console.log(useId);
-
-        setId([...useId, final]);
-
-        // if (dataList.nextPageToken) {
-        //   return creatDataList();
-        // }
-      });
-  };
+  useEffect(() => {
+    console.log(emails);
+  }, [emails]);
 
   useEffect(() => {
     /* global google */
@@ -74,8 +57,9 @@ function App() {
         apiKey: import.meta.env.VITE_API_KEY,
         scope: SCOPES,
         callback: async (tokenResponse) => {
-          Cookies.set("keyFetch", tokenResponse.access_token);
+          setFetch(tokenResponse.access_token);
           if (tokenResponse && tokenResponse.access_token) {
+            Cookies.set("keyFetch", tokenResponse.access_token);
             fetch("https://www.googleapis.com/gmail/v1/users/me/messages", {
               method: "GET",
               headers: {
@@ -94,31 +78,37 @@ function App() {
 
     // google.accounts.id.prompt();
   }, [useToken]);
-  if (Cookies.get("token") === undefined) {
-    return (
-      <section>
-        <GoogleLogin>
-          <div id="signInDiv"></div>
-        </GoogleLogin>
-      </section>
-    );
-  }
-  const a = true;
 
-  if (Cookies.get("keyFetch") === undefined) {
-    const personData = jwt_decode(Cookies.get("token"));
-    return (
-      <section>
-        <AppLogin name={personData.name}>
-          <button className="text-white text-15" onClick={creatData}>
-            Start met je avontuur met het legen van je mail box van{" "}
-            {personData.email}
-          </button>
-        </AppLogin>
-      </section>
-    );
-  }
+  // if (a) {
+  // return (
+  //   <section>
+  //     <GoogleLogin>
+  //       <div id="signInDiv"></div>
+  //     </GoogleLogin>
+  //   </section>
+  // );
+  // }
 
+  // const a = false;
+  // if (Cookies.get("keyFetch") === undefined && useFetch) {
+  //   console.log(Cookies.get("keyFetch"));
+  const personData = jwt_decode(Cookies.get("token"));
+  return (
+    <section>
+      {/* <AppLogin name={personData.name}>
+        <button className="text-white text-15" onClick={creatData}>
+          Start met je avontuur met het legen van je mail box van{" "}
+          {personData.email}
+        </button>
+      </AppLogin> */}
+      <button className="text-white text-15" onClick={creatData}>
+        Start met je avontuur met het legen van je mail box van{" "}
+        {personData.email}
+      </button>
+      <button onClick={getEmailData}>get data</button>
+    </section>
+  );
+  // }
   return (
     <section>
       {/* {useToken !== undefined ? (
@@ -127,7 +117,7 @@ function App() {
         <div id="signInDiv"></div>
       )}
       <button onClick={creatData}>get token</button>
-      <button onClick={creatDataList}>get data</button> */}
+      <button onClick={createDataList}>get data</button> */}
       <Main />
     </section>
   );

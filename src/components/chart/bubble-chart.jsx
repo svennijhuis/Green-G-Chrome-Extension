@@ -1,6 +1,10 @@
 import * as d3 from "d3";
 import styles from "./Chart.module.scss";
 
+// const json = {
+//   children: emails
+// }
+
 function BubbleChart() {
   const json = {
     children: [
