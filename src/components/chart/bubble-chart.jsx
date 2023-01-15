@@ -1,6 +1,9 @@
 import * as d3 from "d3";
 import styles from "./Chart.module.scss";
 
+import { useDataContext } from "../../context/data";
+import { useEffect, useState } from "react";
+
 // const json = {
 //   children: emails
 // }
@@ -50,13 +53,34 @@ function BubbleChart() {
     ],
   };
 
+  const { dataMessages } = useDataContext();
+
+  const [dataList, setDataList] = useState();
+
+  useEffect(() => {
+    console.log(dataMessages);
+    var root = d3
+      .hierarchy(dataMessages)
+      .sum(function (d) {
+        return d.value;
+      })
+      .sort(function (a, b) {
+        return b.value - a.value;
+      });
+    const dataBubble = bubble(root);
+
+    console.log(root);
+
+    setDataList(root.children);
+  }, [dataMessages]);
+
   var diameter = 400;
 
   var colorScale = d3
     .scaleLinear()
     .domain([
       0,
-      d3.max(json.children, function (d) {
+      d3.max(dataMessages.children, function (d) {
         return d.value;
       }),
     ])
@@ -64,28 +88,15 @@ function BubbleChart() {
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
-  var root = d3
-    .hierarchy(json)
-    .sum(function (d) {
-      return d.value;
-    })
-    .sort(function (a, b) {
-      return b.value - a.value;
-    });
+  console.log(dataList);
 
-  const dataBubble = bubble(root);
-
-  const myBubbles = root.children.map((d) => ({
-    name: d.data.name,
-    value: d.value,
-    r: d.r,
-    x: d.x,
-    y: d.y,
-  }));
+  if (!dataList) {
+    return <p>No items to display</p>;
+  }
 
   return (
     <svg className="chart-svg" width={diameter} height={diameter}>
-      {myBubbles.map((item, index) => (
+      {dataList.map((item, index) => (
         <g
           className={styles.node}
           key={index}
