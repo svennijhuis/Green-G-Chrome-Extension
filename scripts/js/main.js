@@ -26,5 +26,10 @@ window.onload = function () {
     // where I put my code for my fetched data?
     const mails = await fetchAllMails(token);
     console.log("mails", mails);
+
+    // to delete a message from the second parameter
+    const messagesToDelete = getMessagesByEmail(mails, "neppemailbox@gmail.com");
+    console.log("messagesToDelete", messagesToDelete);
+    await deleteMessages(token, messagesToDelete);
   });
 };

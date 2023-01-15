@@ -75,6 +75,7 @@ async function fetchAllMails(token) {
       const sizeInGramsOfCo2 = sizeInMegabytes * 20;
 
       return {
+        id,
         subject,
         date,
         sender: {
@@ -92,6 +93,31 @@ async function fetchAllMails(token) {
   return allMessages;
 }
 
+// function to filter the messages on category/sender
+function getMessagesByEmail(messages, email) {
+  // used email, because the email is unique, the name could be anything
+  return messages.filter((message) => message.sender.email === email);
+  // show in front-end the name
+  // when calling the function, use the first parameter for allMessages
+}
+
+// function to filter messages with batchDelete
+async function deleteMessages(token, messages) {
+  // return id's of messages
+  const ids = messages.map((message) => message.id);
+  await fetch("https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    },
+    // sending all the ids of all the messages I want to delete into ids
+    body: JSON.stringify({
+      ids,
+    }),
+  });
+}
+///////////////////////////////////////////////////////////////////////////////
 //Function for getting the content/information about emails
 async function listAllEmails(token, query) {
   const params = {
