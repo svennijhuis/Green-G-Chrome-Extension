@@ -4,7 +4,6 @@ import Main from "./components/layout/main";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
-import "@fontsource/inter";
 import GoogleLogin from "./components/layout/google-login";
 import AppLogin from "./components/layout/app-login copy";
 import { useDataContext } from "./context/data";
@@ -16,7 +15,8 @@ import BundleBackground from "./components/svg/bundle-background";
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
   const [tokenClient, setTokenClient] = useState({});
-  const { emails, getEmailData } = useDataContext();
+  const { emails, getEmailData, setDataMessages, dataMessages } =
+    useDataContext();
 
   useEffect(() => {
     Cookies.remove("token");
@@ -66,7 +66,30 @@ function App() {
   }, [useToken]);
 
   useEffect(() => {
-    console.log(emails);
+    const senderRegex = /(.*) <(.*)>/gm;
+    let newJson = emails.map((d) => ({
+      id: d.id,
+      snippet: d.snippet,
+      sizeInMegabytes: +parseFloat(d.sizeEstimate / 1024 / 1024).toFixed(2),
+      sizeInGramsOfCo2:
+        parseFloat(d.sizeEstimate / 1024 / 1024).toFixed(2) * 20,
+      labelIds: d.labelIds,
+      from: [
+        ...d.payload.headers
+          .find((element) => element.name === "From")
+          .value.matchAll(senderRegex),
+      ],
+      date: new Date(
+        d.payload.headers.find((element) => element.name === "Date").value
+      ),
+      name: "Pineapples",
+      value: 30,
+    }));
+    const jsonTest = {
+      children: newJson,
+    };
+
+    setDataMessages(jsonTest);
   }, [emails]);
 
   if (Cookies.get("token") === undefined) {
@@ -80,7 +103,6 @@ function App() {
   }
 
   if (Cookies.get("keyFetch") === undefined) {
-    console.log(Cookies.get("keyFetch"));
     const personData = jwt_decode(Cookies.get("token"));
     return (
       <section>
@@ -93,8 +115,9 @@ function App() {
       </section>
     );
   }
-
+console.log(dataMessages);
   if (emails.length === 0) {
+    // if(dataMessages.children.length === 0){
     return (
       <section className="flex flex-col h-screen relative">
         <LoadingAnimation />

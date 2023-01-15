@@ -23,6 +23,9 @@ const useDataContext = () => useContext(DataContext);
 const DataProvider = ({ children }) => {
   const [messageIds, setMessageIds] = useState([]);
   const [emails, setEmails] = useState([]);
+  const [dataMessages, setDataMessages] = useState(null);
+
+  const [dataMessagesList, setDataMessagesList] = useState(null);
 
   const getMessageIds = async (token, collection = []) => {
     const url = new URL(
@@ -46,7 +49,7 @@ const DataProvider = ({ children }) => {
     const messageIds = data.messages.map(({ id }) => id);
     collection = [...collection, ...messageIds];
 
-    if (data.nextPageToken && collection.length <= 100) {
+    if (data.nextPageToken && collection.length <= 25) {
       return getMessageIds(data.nextPageToken, collection);
     }
 
@@ -91,6 +94,10 @@ const DataProvider = ({ children }) => {
         emails,
         messageIds,
         getEmailData,
+        dataMessages,
+        setDataMessages,
+        dataMessagesList,
+        setDataMessagesList,
       }}
     >
       {children}

@@ -1,62 +1,82 @@
 import * as d3 from "d3";
 import styles from "./Chart.module.scss";
 
-// const json = {
-//   children: emails
-// }
+import { useDataContext } from "../../context/data";
+import { useEffect, useState } from "react";
 
 function BubbleChart() {
-  const json = {
-    children: [
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-    ],
-  };
+  // const json = {
+  //   children: [
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //   ],
+  // };
 
+  const { dataMessages, dataMessagesList, setDataMessagesList } =
+    useDataContext();
+
+  const [dataList, setDataList] = useState();
   var diameter = 400;
+
+  useEffect(() => {
+    console.log(dataMessages);
+    var root = d3
+      .hierarchy(dataMessages)
+      .sum(function (d) {
+        return d.value;
+      })
+      .sort(function (a, b) {
+        return b.value - a.value;
+      });
+    const dataBubble = bubble(root);
+
+    console.log(root);
+
+    setDataList(root.children);
+  }, [dataMessages]);
 
   var colorScale = d3
     .scaleLinear()
     .domain([
       0,
-      d3.max(json.children, function (d) {
+      d3.max(dataMessages.children, function (d) {
         return d.value;
       }),
     ])
@@ -64,28 +84,24 @@ function BubbleChart() {
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
-  var root = d3
-    .hierarchy(json)
-    .sum(function (d) {
-      return d.value;
-    })
-    .sort(function (a, b) {
-      return b.value - a.value;
-    });
+  useEffect(() => {
+    if (!dataList === undefined) {
+      console.log("object");
+      const test = dataList.flat().forEach((item) => {
+        item.from[1];
+      });
 
-  const dataBubble = bubble(root);
+      console.log(test);
+    }
+  }, [dataList]);
 
-  const myBubbles = root.children.map((d) => ({
-    name: d.data.name,
-    value: d.value,
-    r: d.r,
-    x: d.x,
-    y: d.y,
-  }));
+  if (!dataList) {
+    return <p>No items to display</p>;
+  }
 
   return (
     <svg className="chart-svg" width={diameter} height={diameter}>
-      {myBubbles.map((item, index) => (
+      {dataList.map((item, index) => (
         <g
           className={styles.node}
           key={index}
