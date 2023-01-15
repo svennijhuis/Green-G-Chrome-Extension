@@ -4,58 +4,56 @@ import styles from "./Chart.module.scss";
 import { useDataContext } from "../../context/data";
 import { useEffect, useState } from "react";
 
-// const json = {
-//   children: emails
-// }
-
 function BubbleChart() {
-  const json = {
-    children: [
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-      { name: "Apples", value: 70 },
-      { name: "Oranges", value: 44 },
-      { name: "Kiwis", value: 65 },
-      { name: "Bananas", value: 39 },
-      { name: "Pears", value: 10 },
-      { name: "Satsumas", value: 25 },
-      { name: "Pineapples", value: 30 },
-    ],
-  };
+  // const json = {
+  //   children: [
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //     { name: "Apples", value: 70 },
+  //     { name: "Oranges", value: 44 },
+  //     { name: "Kiwis", value: 65 },
+  //     { name: "Bananas", value: 39 },
+  //     { name: "Pears", value: 10 },
+  //     { name: "Satsumas", value: 25 },
+  //     { name: "Pineapples", value: 30 },
+  //   ],
+  // };
 
-  const { dataMessages } = useDataContext();
+  const { dataMessages, dataMessagesList, setDataMessagesList } =
+    useDataContext();
 
   const [dataList, setDataList] = useState();
+  var diameter = 400;
 
   useEffect(() => {
     console.log(dataMessages);
@@ -74,8 +72,6 @@ function BubbleChart() {
     setDataList(root.children);
   }, [dataMessages]);
 
-  var diameter = 400;
-
   var colorScale = d3
     .scaleLinear()
     .domain([
@@ -88,7 +84,16 @@ function BubbleChart() {
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
-  console.log(dataList);
+  useEffect(() => {
+    if (!dataList === undefined) {
+      console.log("object");
+      const test = dataList.flat().forEach((item) => {
+        item.from[1];
+      });
+
+      console.log(test);
+    }
+  }, [dataList]);
 
   if (!dataList) {
     return <p>No items to display</p>;

@@ -25,6 +25,8 @@ const DataProvider = ({ children }) => {
   const [emails, setEmails] = useState([]);
   const [dataMessages, setDataMessages] = useState(null);
 
+  const [dataMessagesList, setDataMessagesList] = useState(null);
+
   const getMessageIds = async (token, collection = []) => {
     const url = new URL(
       "https://www.googleapis.com/gmail/v1/users/me/messages"
@@ -94,6 +96,8 @@ const DataProvider = ({ children }) => {
         getEmailData,
         dataMessages,
         setDataMessages,
+        dataMessagesList,
+        setDataMessagesList,
       }}
     >
       {children}
