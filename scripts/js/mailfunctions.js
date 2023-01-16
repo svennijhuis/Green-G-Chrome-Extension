@@ -49,6 +49,7 @@ async function fetchAllMails(token) {
       // with find(), I can find something in an array
       // if no headers, give no error with ?
       // I need from the headers in payload with { name = Subject, value = xyz} the value:
+      console.log("payload", payload);
       const subject = payload?.headers.find(function (header) {
         return header.name === "Subject";
       })?.value;
@@ -64,6 +65,7 @@ async function fetchAllMails(token) {
         return header.name === "From";
       })?.value;
       const sizeInMegabytes = parseFloat(sizeEstimate / 1024 / 1024).toFixed(2);
+      console.log("sizeInMegabytes", sizeInMegabytes);
       // from consists out of sender name and email
       // regex, / / is the structure, () is for groups, .* means there can be more than a singular character, <> tells me the position of the mail that I dont want in the email group but it matches, gm is match at start of the match with multi-line
       // source: https://regex101.com/
@@ -96,7 +98,9 @@ async function fetchAllMails(token) {
 // function to filter the messages on category/sender
 function getMessagesByEmail(messages, email) {
   // used email, because the email is unique, the name could be anything
-  return messages.filter((message) => message.sender.email === email);
+  const filteredMessages = messages.filter((message) => message.sender.email === email);
+  console.log(filteredMessages[0]);
+  return filteredMessages;
   // show in front-end the name
   // when calling the function, use the first parameter for allMessages
 }

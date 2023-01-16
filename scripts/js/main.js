@@ -26,10 +26,26 @@ window.onload = function () {
     // where I put my code for my fetched data?
     const mails = await fetchAllMails(token);
     console.log("mails", mails);
+    console.log("getMessagesByEmail", getMessagesByEmail(mails, "suiyichiro@hotmail.com"));
 
     // to delete a message from the second parameter
     const messagesToDelete = getMessagesByEmail(mails, "neppemailbox@gmail.com");
     console.log("messagesToDelete", messagesToDelete);
     await deleteMessages(token, messagesToDelete);
-  });
+
+    // filter by date
+    // in datefunctions, put: import { differenceInMonths } from 'date-fns'
+    // filter will run the filter function of for every single date
+    // DOES NOT WORK UNTIL YOU CAN INSTALL THE DATE-FNS PACKAGE SO IT'S COMMENTED OUT TO GET NO ERRORS
+
+    // const isNotOlderThanTwoMonths = mails.filter((mail) => isNotOlderThanTwoMonths(mail.date));
+    // const isBetweenTwoToSixMonthsOld = mails.filter((mail) =>
+    //   isBetweenTwoToSixMonthsOld(mail.date)
+    // );
+    // const isBetweenSixToTwelveMonthsOld = mails.filter((mail) =>
+    //   isBetweenSixToTwelveMonthsOld(mail.date)
+    // );
+    // const isBetweenOneToTwoYearsOld = mails.filter((mail) => isBetweenOneToTwoYearsOld(mail.date));
+    // const isOlderThanTwoYears = mails.filter((mail) => isOlderThanTwoYears(mail.date));
+    // ;
 };
