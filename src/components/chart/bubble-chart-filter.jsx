@@ -5,13 +5,11 @@ import { useDataContext } from "../../context/data";
 import { useEffect, useState } from "react";
 
 function BubbleChart() {
-
   const {
     dataMessages,
     dataMessagesList,
     setDataMessagesList,
     countedSenders,
-    setValueFilter
   } = useDataContext();
 
   const [dataList, setDataList] = useState();
@@ -27,14 +25,13 @@ function BubbleChart() {
       .sort(function (a, b) {
         return b.value - a.value;
       });
-    const dataBubble = bubble(root);
 
     console.log(root);
 
     setDataList(root.children);
   }, [countedSenders]);
 
-
+  
   if (countedSenders) {
     var colorScale = d3
       .scaleLinear()

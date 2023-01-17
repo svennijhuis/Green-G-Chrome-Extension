@@ -15,15 +15,18 @@ import BundleBackground from "./components/svg/bundle-background";
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
   const [tokenClient, setTokenClient] = useState({});
-  const { emails, getEmailData, setDataMessages, dataMessages } =
-    useDataContext();
+  const {
+    emails,
+    getEmailData,
+    setDataMessages,
+    dataMessages,
+    setCountedSenders,
+  } = useDataContext();
 
   useEffect(() => {
     Cookies.remove("token");
     Cookies.remove("keyFetch");
   }, []);
-
-  const [useFetch, setFetch] = useState(Cookies.get("keyFetch"));
 
   const client_id = import.meta.env.VITE_CLIENT_ID;
   const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
@@ -55,7 +58,6 @@ function App() {
         apiKey: import.meta.env.VITE_API_KEY,
         scope: SCOPES,
         callback: async (tokenResponse) => {
-          setFetch(tokenResponse.access_token);
           if (tokenResponse && tokenResponse.access_token) {
             Cookies.set("keyFetch", tokenResponse.access_token);
             getEmailData();
@@ -64,6 +66,36 @@ function App() {
       })
     );
   }, [useToken]);
+
+  const countOcurrancesOfSenders = () => {
+    if (dataMessages) {
+      let from = [];
+      for (const message of dataMessages.children) {
+        const currentItem = message.from[0][1];
+
+        const indexOfSearchItem = from.findIndex(
+          (item) => item.name === currentItem
+        );
+        if (indexOfSearchItem > -1) {
+          from[indexOfSearchItem].value += 1;
+        } else {
+          from.push({ name: currentItem, value: 1 });
+        }
+      }
+      console.log("from counted", from);
+      setCountedSenders(from);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      dataMessages &&
+      dataMessages.children &&
+      dataMessages.children.length > 0
+    ) {
+      countOcurrancesOfSenders();
+    }
+  }, [dataMessages]);
 
   useEffect(() => {
     const senderRegex = /(.*) <(.*)>/gm;
@@ -85,11 +117,11 @@ function App() {
       name: "Pineapples",
       value: 30,
     }));
-    const jsonTest = {
+    const jsonOutput = {
       children: newJson,
     };
 
-    setDataMessages(jsonTest);
+    setDataMessages(jsonOutput);
   }, [emails]);
 
   if (Cookies.get("token") === undefined) {
@@ -115,9 +147,8 @@ function App() {
       </section>
     );
   }
-console.log(dataMessages);
+
   if (emails.length === 0) {
-    // if(dataMessages.children.length === 0){
     return (
       <section className="flex flex-col h-screen relative">
         <LoadingAnimation />
