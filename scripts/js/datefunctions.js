@@ -35,3 +35,20 @@ function isOlderThanTwoYears(date) {
   // more than 2 years
   return differenceInMonths >= 24;
 }
+
+// to reduce the filtered emails
+function reduceMails(mails) {
+  return mails.reduce((accumulator, currentValue) => {
+    const name = currentValue.sender.name;
+    const index = accumulator.findIndex((o) => o.name === name);
+
+    // Sender is not in the accumulator yet
+    if (index === -1) {
+      accumulator.push({ name, count: 1 });
+    } else {
+      accumulator[index].count = accumulator[index].count + 1;
+    }
+
+    return accumulator;
+  }, []);
+}

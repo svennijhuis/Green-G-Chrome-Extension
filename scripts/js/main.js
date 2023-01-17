@@ -50,5 +50,12 @@ window.onload = function () {
     // const isBetweenOneToTwoYearsOld = mails.filter((mail) => isBetweenOneToTwoYearsOld(mail.date));
     // const isOlderThanTwoYears = mails.filter((mail) => isOlderThanTwoYears(mail.date));
     // ;
+
+    // how you can use the reduceMails function in dateFunctions
+    // const mailsBetweenTwoToSixMonthsOld = allMails.filter((mail) =>
+    //   isBetweenTwoToSixMonthsOld(mail.date)
+    // );
+    //
+    // const mailsBySenderCounted = reduceMails(mailsBetweenTwoToSixMonthsOld);
   });
 };
