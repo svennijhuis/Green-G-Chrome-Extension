@@ -26,6 +26,11 @@ const DataProvider = ({ children }) => {
   const [dataMessages, setDataMessages] = useState(null);
 
   const [dataMessagesList, setDataMessagesList] = useState(null);
+  const [countedSenders, setCountedSenders] = useState();
+
+  const [dataFilter, setDataFilter] = useState(null);
+
+  const [valueFilter, setValueFilter] = useState();
 
   const getMessageIds = async (token, collection = []) => {
     const url = new URL(
@@ -98,6 +103,12 @@ const DataProvider = ({ children }) => {
         setDataMessages,
         dataMessagesList,
         setDataMessagesList,
+        countedSenders,
+        setCountedSenders,
+        dataFilter,
+        setDataFilter,
+        valueFilter,
+        setValueFilter,
       }}
     >
       {children}
