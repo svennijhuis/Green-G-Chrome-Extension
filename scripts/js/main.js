@@ -23,12 +23,14 @@ window.onload = function () {
   });
 
   document.getElementById("button").addEventListener("click", async function () {
-    // where I put my code for my fetched data?
+    // when pressing the button, fetch all mails
     const mails = await fetchAllMails(token);
     console.log("mails", mails);
+    // second paramter is used for the email
     console.log("getMessagesByEmail", getMessagesByEmail(mails, "suiyichiro@hotmail.com"));
 
     // to delete a message from the second parameter
+    // shouldn't work unless you have emails with this email in your mailbox
     const messagesToDelete = getMessagesByEmail(mails, "neppemailbox@gmail.com");
     console.log("messagesToDelete", messagesToDelete);
     await deleteMessages(token, messagesToDelete);
@@ -48,4 +50,5 @@ window.onload = function () {
     // const isBetweenOneToTwoYearsOld = mails.filter((mail) => isBetweenOneToTwoYearsOld(mail.date));
     // const isOlderThanTwoYears = mails.filter((mail) => isOlderThanTwoYears(mail.date));
     // ;
+  });
 };
