@@ -1,5 +1,5 @@
 const google = window.google;
-
+import { differenceInMonths } from "date-fns";
 import Main from "./components/layout/main";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
@@ -149,100 +149,160 @@ function App() {
 
       setDeleteMessagesId(newArray);
 
-      var oneWeekAgo = new Date();
-      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      // var oneWeekAgo = new Date();
+      // oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
-      var oneMonthAgo = new Date();
-      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+      // var oneMonthAgo = new Date();
+      // oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
 
-      var threeMonthsAgo = new Date();
-      threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+      // var threeMonthsAgo = new Date();
+      // threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
 
-      var sixMonthsAgo = new Date();
-      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+      // var sixMonthsAgo = new Date();
+      // sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
-      var oneYearAgo = new Date();
-      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+      // var oneYearAgo = new Date();
+      // oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
-      var twoYearsAgo = new Date();
-      twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+      // var twoYearsAgo = new Date();
+      // twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
 
-      var threeYearsAgo = new Date();
-      threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
+      // var threeYearsAgo = new Date();
+      // threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
 
-      // Nu en zeven dagen
-      var nowAndSevenDays = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return emailDate >= oneWeekAgo.getTime() && emailDate <= Date.now();
-      });
+      // // Nu en zeven dagen
+      // var nowAndSevenDays = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return emailDate >= oneWeekAgo.getTime() && emailDate <= Date.now();
+      // });
 
-      // een week geleden en een maand
-      var betweenWeekMonth = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return (
-          emailDate >= oneWeekAgo.getTime() && emailDate < oneMonthAgo.getTime()
-        );
-      });
+      // // een week geleden en een maand
+      // var betweenWeekMonth = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return (
+      //     emailDate >= oneWeekAgo.getTime() && emailDate < oneMonthAgo.getTime()
+      //   );
+      // });
 
-      // 1 maand - 3 maanden
-      var oneMonthToThreeMonths = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return (
-          emailDate >= oneMonthAgo.getTime() &&
-          emailDate < threeMonthsAgo.getTime()
-        );
-      });
+      // // 1 maand - 3 maanden
+      // var oneMonthToThreeMonths = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return (
+      //     emailDate >= oneMonthAgo.getTime() &&
+      //     emailDate < threeMonthsAgo.getTime()
+      //   );
+      // });
 
-      //  1 maand - 3 maanden
-      var oneMonthToThreeMonths = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return (
-          emailDate >= oneMonthAgo.getTime() &&
-          emailDate < threeMonthsAgo.getTime()
-        );
-      });
+      // //  1 maand - 3 maanden
+      // var oneMonthToThreeMonths = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return (
+      //     emailDate >= oneMonthAgo.getTime() &&
+      //     emailDate < threeMonthsAgo.getTime()
+      //   );
+      // });
 
-      //  3maand - 6 maanden
-      var threeMonthsToSixMonths = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return (
-          emailDate >= threeMonthsAgo.getTime() &&
-          emailDate < sixMonthsAgo.getTime()
-        );
-      });
+      // //  3maand - 6 maanden
+      // var threeMonthsToSixMonths = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return (
+      //     emailDate >= threeMonthsAgo.getTime() &&
+      //     emailDate < sixMonthsAgo.getTime()
+      //   );
+      // });
 
-      // 6 maanden - 1 jaar
-      var betweenYearSixMonth = filterData.filter(function (email) {
-        oneYearAgo.setDate(oneYearAgo.getDate() - 1);
-        var emailDate = new Date(email.date).getTime();
-        return (
-          emailDate >= oneYearAgo.getTime() &&
-          emailDate < sixMonthsAgo.getTime()
-        );
-      });
+      // // 6 maanden - 1 jaar
+      // var betweenYearSixMonth = filterData.filter(function (email) {
+      //   oneYearAgo.setDate(oneYearAgo.getDate() - 1);
+      //   var emailDate = new Date(email.date).getTime();
+      //   return (
+      //     emailDate >= oneYearAgo.getTime() &&
+      //     emailDate < sixMonthsAgo.getTime()
+      //   );
+      // });
 
-      // 1 jaar- 2 jaar
-      var oneYearToTwoYears = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return (
-          emailDate >= oneYearAgo.getTime() && emailDate < twoYearsAgo.getTime()
-        );
-      });
+      // // 1 jaar- 2 jaar
+      // var oneYearToTwoYears = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return (
+      //     emailDate >= oneYearAgo.getTime() && emailDate < twoYearsAgo.getTime()
+      //   );
+      // });
 
-      // 2 jaar- 3 jaar
-      var twoYearsToThreeYears = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return (
-          emailDate >= twoYearsAgo.getTime() &&
-          emailDate < threeYearsAgo.getTime()
-        );
-      });
+      // // 2 jaar- 3 jaar
+      // var twoYearsToThreeYears = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return (
+      //     emailDate >= twoYearsAgo.getTime() &&
+      //     emailDate < threeYearsAgo.getTime()
+      //   );
+      // });
 
-      // 3 jaar en langer
-      var olderThanThreeYears = filterData.filter(function (email) {
-        var emailDate = new Date(email.date).getTime();
-        return emailDate < threeYearsAgo.getTime();
-      });
+      // // 3 jaar en langer
+      // var olderThanThreeYears = filterData.filter(function (email) {
+      //   var emailDate = new Date(email.date).getTime();
+      //   return emailDate < threeYearsAgo.getTime();
+      // });
+
+      function isNotOlderThanTwoMonthsFilter(date) {
+        // new Date, gives you the date of right now
+        const now = new Date();
+        const differenceInMonths = differenceInMonths(now, date);
+        // && both needs to be true, to return true
+        return differenceInMonths >= 0 && differenceInMonths <= 1;
+      }
+
+      function isBetweenTwoToSixMonthsOldFilter(date) {
+        const now = new Date();
+        const differenceInMonths = differenceInMonths(now, date);
+        // && both needs to be true, to return true
+        return differenceInMonths >= 2 && differenceInMonths <= 5;
+      }
+
+      function isBetweenSixToTwelveMonthsOldFilter(date) {
+        const now = new Date();
+        const differenceInMonths = differenceInMonths(now, date);
+        // && both needs to be true, to return true
+        return differenceInMonths >= 6 && differenceInMonths <= 11;
+      }
+
+      function isBetweenOneToTwoYearsOldFilter(date) {
+        const now = new Date();
+        const differenceInMonths = differenceInMonths(now, date);
+        // && both needs to be true, to return true
+        return differenceInMonths >= 12 && differenceInMonths <= 23;
+      }
+
+      function isOlderThanTwoYearsFilter(date) {
+        const now = new Date();
+        const differenceInMonths = differenceInMonths(now, date);
+        // more than 2 years
+        return differenceInMonths >= 24;
+      }
+
+      const isNotOlderThanTwoMonths = filterData.filter((mail) =>
+        isNotOlderThanTwoMonthsFilter(mail.date)
+      );
+      const isBetweenTwoToSixMonthsOld = filterData.filter((mail) =>
+        isBetweenTwoToSixMonthsOldFilter(mail.date)
+      );
+      const isBetweenSixToTwelveMonthsOld = filterData.filter((mail) =>
+        isBetweenSixToTwelveMonthsOldFilter(mail.date)
+      );
+      const isBetweenOneToTwoYearsOld = filterData.filter((mail) =>
+        isBetweenOneToTwoYearsOldFilter(mail.date)
+      );
+      const isOlderThanTwoYears = filterData.filter((mail) =>
+        isOlderThanTwoYearsFilter(mail.date)
+      );
+
+      console.log(
+        isOlderThanTwoYears,
+        isBetweenOneToTwoYearsOld,
+        isBetweenSixToTwelveMonthsOld,
+        isBetweenTwoToSixMonthsOld,
+        isNotOlderThanTwoMonths
+      );
 
       const objectDateCount = [
         {
