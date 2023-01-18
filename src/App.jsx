@@ -35,6 +35,7 @@ function App() {
     countedDate,
     deleteMessagesId,
     setDeleteMessagesId,
+    valueDate,
   } = useDataContext();
 
   useEffect(() => {
@@ -379,12 +380,17 @@ function App() {
     );
   }
 
-  if (valueFilter && countedDate !== undefined) {
+  if (valueFilter && countedDate !== undefined && valueDate === undefined) {
     return (
       <section>
         <MainFilter />
       </section>
     );
   }
+  return (
+    <section>
+      <h1>testtest</h1>
+    </section>
+  );
 }
 export default App;

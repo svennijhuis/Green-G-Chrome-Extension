@@ -30,6 +30,7 @@ const DataProvider = ({ children }) => {
   const [dataFilter, setDataFilter] = useState(null);
 
   const [valueFilter, setValueFilter] = useState();
+  const [valueDate, setValueDate] = useState();
 
   const [deleteMessagesId, setDeleteMessagesId] = useState();
 
@@ -114,6 +115,8 @@ const DataProvider = ({ children }) => {
         setValueFilter,
         deleteMessagesId,
         setDeleteMessagesId,
+        valueDate,
+        setValueDate,
       }}
     >
       {children}

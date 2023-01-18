@@ -5,7 +5,7 @@ import { useDataContext } from "../../context/data";
 import { useEffect, useState } from "react";
 
 function BubbelChartFilter() {
-  const { countedDate, setValueDate } = useDataContext();
+  const { countedDate } = useDataContext();
   const [dataList, setDataList] = useState();
   var diameter = 400;
 
@@ -38,7 +38,8 @@ function BubbelChartFilter() {
 
   const handleClick = (value) => {
     console.log(value);
-    setValueDate(value);
+
+    setValueDate();
 
     // TODO: Filtering
     // create new component to show date filtered data
