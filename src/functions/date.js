@@ -1,35 +1,36 @@
-export function isNotOlderThanTwoMonths(date) {
+import { differenceInMonths } from "date-fns";
+export function isNotOlderThanTwoMonthsFilter(date) {
   // new Date, gives you the date of right now
   const now = new Date();
-  const differenceInMonths = differenceInMonths(now, date);
+  const differenceInMonthsVariable = differenceInMonths(now, date);
   // && both needs to be true, to return true
-  return differenceInMonths >= 0 && differenceInMonths <= 1;
+  return differenceInMonthsVariable >= 0 && differenceInMonthsVariable <= 1;
 }
 
-export function isBetweenTwoToSixMonthsOld(date) {
+export function isBetweenTwoToSixMonthsOldFilter(date) {
   const now = new Date();
-  const differenceInMonths = differenceInMonths(now, date);
+  const differenceInMonthsVariable = differenceInMonths(now, date);
   // && both needs to be true, to return true
-  return differenceInMonths >= 2 && differenceInMonths <= 5;
+  return differenceInMonthsVariable >= 2 && differenceInMonthsVariable <= 5;
 }
 
-export function isBetweenSixToTwelveMonthsOld(date) {
+export function isBetweenSixToTwelveMonthsOldFilter(date) {
   const now = new Date();
-  const differenceInMonths = differenceInMonths(now, date);
+  const differenceInMonthsVariable = differenceInMonths(now, date);
   // && both needs to be true, to return true
-  return differenceInMonths >= 6 && differenceInMonths <= 11;
+  return differenceInMonthsVariable >= 6 && differenceInMonthsVariable <= 11;
 }
 
-export function isBetweenOneToTwoYearsOld(date) {
+export function isBetweenOneToTwoYearsOldFilter(date) {
   const now = new Date();
-  const differenceInMonths = differenceInMonths(now, date);
+  const differenceInMonthsVariable = differenceInMonths(now, date);
   // && both needs to be true, to return true
-  return differenceInMonths >= 12 && differenceInMonths <= 23;
+  return differenceInMonthsVariable >= 12 && differenceInMonthsVariable <= 23;
 }
 
-export function isOlderThanTwoYears(date) {
+export function isOlderThanTwoYearsFilter(date) {
   const now = new Date();
-  const differenceInMonths = differenceInMonths(now, date);
+  const differenceInMonthsVariable = differenceInMonths(now, date);
   // more than 2 years
-  return differenceInMonths >= 24;
+  return differenceInMonthsVariable >= 24;
 }

@@ -13,6 +13,14 @@ import CarAnimation from "./components/animation/car";
 import BundleBackground from "./components/svg/bundle-background";
 import MainFilter from "./components/layout/main-filter";
 
+import {
+  isNotOlderThanTwoMonthsFilter,
+  isBetweenTwoToSixMonthsOldFilter,
+  isBetweenSixToTwelveMonthsOldFilter,
+  isBetweenOneToTwoYearsOldFilter,
+  isOlderThanTwoYearsFilter,
+} from "./functions/date";
+
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
   const [tokenClient, setTokenClient] = useState({});
@@ -243,50 +251,6 @@ function App() {
       //   var emailDate = new Date(email.date).getTime();
       //   return emailDate < threeYearsAgo.getTime();
       // });
-
-      function isNotOlderThanTwoMonthsFilter(date) {
-        // new Date, gives you the date of right now
-        const now = new Date();
-        const differenceInMonthsVariable = differenceInMonths(now, date);
-        // && both needs to be true, to return true
-        return (
-          differenceInMonthsVariable >= 0 && differenceInMonthsVariable <= 1
-        );
-      }
-
-      function isBetweenTwoToSixMonthsOldFilter(date) {
-        const now = new Date();
-        const differenceInMonthsVariable = differenceInMonths(now, date);
-        // && both needs to be true, to return true
-        return (
-          differenceInMonthsVariable >= 2 && differenceInMonthsVariable <= 5
-        );
-      }
-
-      function isBetweenSixToTwelveMonthsOldFilter(date) {
-        const now = new Date();
-        const differenceInMonthsVariable = differenceInMonths(now, date);
-        // && both needs to be true, to return true
-        return (
-          differenceInMonthsVariable >= 6 && differenceInMonthsVariable <= 11
-        );
-      }
-
-      function isBetweenOneToTwoYearsOldFilter(date) {
-        const now = new Date();
-        const differenceInMonthsVariable = differenceInMonths(now, date);
-        // && both needs to be true, to return true
-        return (
-          differenceInMonthsVariable >= 12 && differenceInMonthsVariable <= 23
-        );
-      }
-
-      function isOlderThanTwoYearsFilter(date) {
-        const now = new Date();
-        const differenceInMonthsVariable = differenceInMonths(now, date);
-        // more than 2 years
-        return differenceInMonthsVariable >= 24;
-      }
 
       const isNotOlderThanTwoMonths = filterData.filter((mail) =>
         isNotOlderThanTwoMonthsFilter(mail.date)
