@@ -4,40 +4,36 @@ import styles from "./Chart.module.scss";
 import { useDataContext } from "../../context/data";
 import { useEffect, useState } from "react";
 
-function BubbleChart() {
-  const {
-    dataMessages,
-    dataMessagesList,
-    setDataMessagesList,
-    countedSenders,
-  } = useDataContext();
-
+function BubbelChartFilter() {
+  const { countedDate } = useDataContext();
   const [dataList, setDataList] = useState();
   var diameter = 400;
 
   useEffect(() => {
-    const chartData = { children: countedSenders };
-    var root = d3
-      .hierarchy(chartData)
-      .sum(function (d) {
-        return d.value;
-      })
-      .sort(function (a, b) {
-        return b.value - a.value;
-      });
+    if (countedDate) {
+      console.log(countedDate);
 
-    console.log(root);
+      var root = d3
+        .hierarchy(countedDate)
+        .sum(function (d) {
+          return d.value;
+        })
+        .sort(function (a, b) {
+          return b.value - a.value;
+        });
 
-    setDataList(root.children);
-  }, [countedSenders]);
+      console.log(root);
 
-  
-  if (countedSenders) {
+      setDataList(root.children);
+    }
+  }, [countedDate]);
+
+  if (countedDate) {
     var colorScale = d3
       .scaleLinear()
       .domain([
         0,
-        d3.max(countedSenders, function (d) {
+        d3.max(countedDate.children, function (d) {
           return d.value;
         }),
       ])
@@ -45,17 +41,6 @@ function BubbleChart() {
   }
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
-
-  useEffect(() => {
-    if (!dataList === undefined) {
-      console.log("object");
-      const test = dataList.flat().forEach((item) => {
-        item.from[1];
-      });
-
-      console.log(test);
-    }
-  }, [dataList]);
 
   const handleClick = (value) => {
     console.log(value);
@@ -70,7 +55,7 @@ function BubbleChart() {
     // repeat process for creating a new component for single emails
     // Make sure to get the right data to display
   };
-
+  console.log(dataList);
   if (!dataList) {
     return <p>No items to display</p>;
   }
@@ -100,4 +85,4 @@ function BubbleChart() {
     </svg>
   );
 }
-export default BubbleChart;
+export default BubbelChartFilter;

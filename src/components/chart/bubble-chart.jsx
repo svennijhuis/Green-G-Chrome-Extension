@@ -5,13 +5,12 @@ import { useDataContext } from "../../context/data";
 import { useEffect, useState } from "react";
 
 function BubbleChart() {
-
   const {
     dataMessages,
     dataMessagesList,
     setDataMessagesList,
     countedSenders,
-    setValueFilter
+    setValueFilter,
   } = useDataContext();
 
   const [dataList, setDataList] = useState();
@@ -33,7 +32,6 @@ function BubbleChart() {
 
     setDataList(root.children);
   }, [countedSenders]);
-
 
   if (countedSenders) {
     var colorScale = d3
@@ -62,7 +60,7 @@ function BubbleChart() {
 
   const handleClick = (value) => {
     console.log(value);
-
+    setValueFilter(value);
     // TODO: Filtering
     // create new component to show date filtered data
     // filter datamessages on date and get them into the new component
@@ -95,7 +93,7 @@ function BubbleChart() {
               dy=".3em"
               style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
             >
-              {item.value}
+              {item.data.name}
             </text>
           </g>
         </g>

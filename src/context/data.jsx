@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-import data from "../data/data.json";
-
 /**
  * This is the context that we use to store all the values from the forms
  * to make them globally available for all other steps.
@@ -27,6 +25,7 @@ const DataProvider = ({ children }) => {
 
   const [dataMessagesList, setDataMessagesList] = useState(null);
   const [countedSenders, setCountedSenders] = useState();
+  const [countedDate, setCountedDate] = useState();
 
   const [dataFilter, setDataFilter] = useState(null);
 
@@ -54,7 +53,7 @@ const DataProvider = ({ children }) => {
     const messageIds = data.messages.map(({ id }) => id);
     collection = [...collection, ...messageIds];
 
-    if (data.nextPageToken && collection.length <= 25) {
+    if (data.nextPageToken && collection.length <= 400) {
       return getMessageIds(data.nextPageToken, collection);
     }
 
@@ -105,6 +104,8 @@ const DataProvider = ({ children }) => {
         setDataMessagesList,
         countedSenders,
         setCountedSenders,
+        countedDate,
+        setCountedDate,
         dataFilter,
         setDataFilter,
         valueFilter,

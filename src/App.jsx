@@ -1,5 +1,11 @@
 const google = window.google;
 
+import { differenceInMonths } from "date-fns";
+import {
+  isBetweenOneToTwoYearsOld,
+  isNotOlderThanTwoMonths,
+} from "./functions/date";
+
 import Main from "./components/layout/main";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
@@ -11,6 +17,7 @@ import LoadingAnimation from "./components/animation/loading";
 
 import CarAnimation from "./components/animation/car";
 import BundleBackground from "./components/svg/bundle-background";
+import MainFilter from "./components/layout/main-filter";
 
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
@@ -21,6 +28,9 @@ function App() {
     setDataMessages,
     dataMessages,
     setCountedSenders,
+    valueFilter,
+    setCountedDate,
+    countedDate,
   } = useDataContext();
 
   useEffect(() => {
@@ -67,35 +77,7 @@ function App() {
     );
   }, [useToken]);
 
-  const countOcurrancesOfSenders = () => {
-    if (dataMessages) {
-      let from = [];
-      for (const message of dataMessages.children) {
-        const currentItem = message.from[0][1];
-
-        const indexOfSearchItem = from.findIndex(
-          (item) => item.name === currentItem
-        );
-        if (indexOfSearchItem > -1) {
-          from[indexOfSearchItem].value += 1;
-        } else {
-          from.push({ name: currentItem, value: 1 });
-        }
-      }
-      console.log("from counted", from);
-      setCountedSenders(from);
-    }
-  };
-
-  useEffect(() => {
-    if (
-      dataMessages &&
-      dataMessages.children &&
-      dataMessages.children.length > 0
-    ) {
-      countOcurrancesOfSenders();
-    }
-  }, [dataMessages]);
+  console.log(dataMessages);
 
   useEffect(() => {
     const senderRegex = /(.*) <(.*)>/gm;
@@ -123,6 +105,173 @@ function App() {
 
     setDataMessages(jsonOutput);
   }, [emails]);
+
+  const countOcurrancesOfSenders = () => {
+    if (dataMessages && dataMessages.children) {
+      let from = [];
+      for (const message of dataMessages.children) {
+        if (typeof message.from !== undefined && message.from[0]) {
+          const currentItem = message.from[0][1];
+          const indexOfSearchItem = from.findIndex(
+            (item) => item.name === currentItem
+          );
+          if (indexOfSearchItem > -1) {
+            from[indexOfSearchItem].value += 1;
+          } else {
+            from.push({ name: currentItem, value: 1 });
+          }
+        }
+      }
+      console.log("from counted", from);
+      setCountedSenders(from);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      dataMessages &&
+      dataMessages.children &&
+      dataMessages.children.length > 0
+    ) {
+      countOcurrancesOfSenders();
+    }
+  }, [dataMessages]);
+
+  useEffect(() => {
+    if (
+      valueFilter &&
+      dataMessages &&
+      dataMessages.children &&
+      dataMessages.children.length > 0
+    ) {
+      var oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
+      var oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+      var threeMonthsAgo = new Date();
+      threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+      var sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+      var oneYearAgo = new Date();
+      oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+      var twoYearsAgo = new Date();
+      twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
+
+      var threeYearsAgo = new Date();
+      threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
+
+      const filterData = dataMessages.children.filter((item) => {
+        if (typeof item.from !== undefined && item.from[0]) {
+          return item.from[0][1] === valueFilter;
+        }
+      });
+
+      console.log(filterData);
+
+      // Nu en zeven dagen
+      var nowAndSevenDays = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return emailDate >= oneWeekAgo.getTime() && emailDate <= Date.now();
+      });
+
+      // een week geleden en een maand
+      var betweenWeekMonth = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return (
+          emailDate >= oneWeekAgo.getTime() && emailDate < oneMonthAgo.getTime()
+        );
+      });
+
+      // 1 maand - 3 maanden
+      var oneMonthToThreeMonths = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return (
+          emailDate >= oneMonthAgo.getTime() &&
+          emailDate < threeMonthsAgo.getTime()
+        );
+      });
+
+      //  1 maand - 3 maanden
+      var oneMonthToThreeMonths = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return (
+          emailDate >= oneMonthAgo.getTime() &&
+          emailDate < threeMonthsAgo.getTime()
+        );
+      });
+
+      //  3maand - 6 maanden
+      var threeMonthsToSixMonths = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return (
+          emailDate >= threeMonthsAgo.getTime() &&
+          emailDate < sixMonthsAgo.getTime()
+        );
+      });
+
+      // 6 maanden - 1 jaar
+      var betweenYearSixMonth = filterData.filter(function (email) {
+        oneYearAgo.setDate(oneYearAgo.getDate() - 1);
+        var emailDate = new Date(email.date).getTime();
+        return (
+          emailDate >= oneYearAgo.getTime() &&
+          emailDate < sixMonthsAgo.getTime()
+        );
+      });
+
+      // 1 jaar- 2 jaar
+      var oneYearToTwoYears = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return (
+          emailDate >= oneYearAgo.getTime() && emailDate < twoYearsAgo.getTime()
+        );
+      });
+
+      // 2 jaar- 3 jaar
+      var twoYearsToThreeYears = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return (
+          emailDate >= twoYearsAgo.getTime() &&
+          emailDate < threeYearsAgo.getTime()
+        );
+      });
+
+      // 3 jaar en langer
+      var olderThanThreeYears = filterData.filter(function (email) {
+        var emailDate = new Date(email.date).getTime();
+        return emailDate < threeYearsAgo.getTime();
+      });
+
+      console.log(nowAndSevenDays);
+
+      const objectDateCount = [
+        { name: "Nu en zeven dagen", value: nowAndSevenDays.length },
+        { name: "8 dagen 30 dagen", value: betweenWeekMonth.length },
+        { name: "Tussen 1 en 3 maanden", value: oneMonthToThreeMonths.length },
+        { name: "Tussen 3 en 6 maanden", value: threeMonthsToSixMonths.length },
+        { name: "Tussen 6 en 12 maanden", value: betweenYearSixMonth.length },
+        { name: "Tussen 1 jaar en 2 jaar", value: oneYearToTwoYears.length },
+        { name: "Tussen 2 jaar en 3 jaar", value: twoYearsToThreeYears.length },
+        { name: "3 jaar en langer", value: olderThanThreeYears.length },
+      ];
+
+      const objectDateCountFilter = objectDateCount.filter(
+        (item) => item.value !== 0
+      );
+
+      const json = { children: objectDateCountFilter };
+      setCountedDate(json);
+      // const json = {
+      //   children: emails
+      // }
+      console.log(json);
+    }
+  }, [valueFilter]);
 
   if (Cookies.get("token") === undefined) {
     return (
@@ -157,11 +306,30 @@ function App() {
       </section>
     );
   }
+  if (valueFilter === undefined) {
+    return (
+      <section>
+        <Main />
+      </section>
+    );
+  }
 
-  return (
-    <section>
-      <Main />
-    </section>
-  );
+  if (countedDate === undefined) {
+    return (
+      <section className="flex flex-col h-screen relative">
+        <LoadingAnimation />
+        <CarAnimation />
+        <BundleBackground />
+      </section>
+    );
+  }
+
+  if (countedDate !== undefined) {
+    return (
+      <section>
+        <MainFilter />
+      </section>
+    );
+  }
 }
 export default App;

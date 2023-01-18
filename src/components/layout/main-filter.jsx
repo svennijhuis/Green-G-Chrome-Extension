@@ -3,10 +3,9 @@ import data from "../../data.json";
 import CarAnimation from "../animation/car";
 import BundleBackground from "../svg/bundle-background";
 import CarInformation from "../button/car-information";
+import BubbelChartFilter from "../chart/bubble-chart-filter";
 
 function MainFilter({ data }) {
-  // if (data) return <section>Loading....</section>;
-
   return (
     <>
       <section className="flex flex-col gap-3 items-center h-screen relative">
@@ -20,7 +19,7 @@ function MainFilter({ data }) {
           20,78 KG CO2
         </h2>
 
-        <BubbleChart data={data} />
+        <BubbelChartFilter />
 
         <CarInformation />
         <CarAnimation />
