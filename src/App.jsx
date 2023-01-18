@@ -247,37 +247,45 @@ function App() {
       function isNotOlderThanTwoMonthsFilter(date) {
         // new Date, gives you the date of right now
         const now = new Date();
-        const differenceInMonths = differenceInMonths(now, date);
+        const differenceInMonthsVariable = differenceInMonths(now, date);
         // && both needs to be true, to return true
-        return differenceInMonths >= 0 && differenceInMonths <= 1;
+        return (
+          differenceInMonthsVariable >= 0 && differenceInMonthsVariable <= 1
+        );
       }
 
       function isBetweenTwoToSixMonthsOldFilter(date) {
         const now = new Date();
-        const differenceInMonths = differenceInMonths(now, date);
+        const differenceInMonthsVariable = differenceInMonths(now, date);
         // && both needs to be true, to return true
-        return differenceInMonths >= 2 && differenceInMonths <= 5;
+        return (
+          differenceInMonthsVariable >= 2 && differenceInMonthsVariable <= 5
+        );
       }
 
       function isBetweenSixToTwelveMonthsOldFilter(date) {
         const now = new Date();
-        const differenceInMonths = differenceInMonths(now, date);
+        const differenceInMonthsVariable = differenceInMonths(now, date);
         // && both needs to be true, to return true
-        return differenceInMonths >= 6 && differenceInMonths <= 11;
+        return (
+          differenceInMonthsVariable >= 6 && differenceInMonthsVariable <= 11
+        );
       }
 
       function isBetweenOneToTwoYearsOldFilter(date) {
         const now = new Date();
-        const differenceInMonths = differenceInMonths(now, date);
+        const differenceInMonthsVariable = differenceInMonths(now, date);
         // && both needs to be true, to return true
-        return differenceInMonths >= 12 && differenceInMonths <= 23;
+        return (
+          differenceInMonthsVariable >= 12 && differenceInMonthsVariable <= 23
+        );
       }
 
       function isOlderThanTwoYearsFilter(date) {
         const now = new Date();
-        const differenceInMonths = differenceInMonths(now, date);
+        const differenceInMonthsVariable = differenceInMonths(now, date);
         // more than 2 years
-        return differenceInMonths >= 24;
+        return differenceInMonthsVariable >= 24;
       }
 
       const isNotOlderThanTwoMonths = filterData.filter((mail) =>
@@ -297,57 +305,40 @@ function App() {
       );
 
       console.log(
-        isOlderThanTwoYears,
-        isBetweenOneToTwoYearsOld,
-        isBetweenSixToTwelveMonthsOld,
-        isBetweenTwoToSixMonthsOld,
-        isNotOlderThanTwoMonths
+        isOlderThanTwoYears.length,
+        isBetweenOneToTwoYearsOld.length,
+        isBetweenSixToTwelveMonthsOld.length,
+        isBetweenTwoToSixMonthsOld.length,
+        isNotOlderThanTwoMonths.length
       );
 
       const objectDateCount = [
         {
-          name: "Nu en zeven dagen",
-          value: nowAndSevenDays.length,
+          name: "Niet ouder als 2 maanden",
+          value: isNotOlderThanTwoMonths.length,
           function: "filterNowAndSevenDays",
         },
         {
-          name: "8 dagen 30 dagen",
-          value: betweenWeekMonth.length,
-          function: "filterNowAndSevenDays",
-        },
-        {
-          name: "Tussen 1 en 3 maanden",
-          value: oneMonthToThreeMonths.length,
-          function: "filterNowAndSevenDays",
-        },
-        {
-          name: "Tussen 3 en 6 maanden",
-          value: threeMonthsToSixMonths.length,
+          name: "Tussen 2 en 6 maanden",
+          value: isBetweenTwoToSixMonthsOld.length,
           function: "filterNowAndSevenDays",
         },
         {
           name: "Tussen 6 en 12 maanden",
-          value: betweenYearSixMonth.length,
+          value: isBetweenSixToTwelveMonthsOld.length,
           function: "filterNowAndSevenDays",
         },
         {
-          name: "Tussen 1 jaar en 2 jaar",
-          value: oneYearToTwoYears.length,
+          name: "Tussen 1 en 2 jaar",
+          value: isBetweenOneToTwoYearsOld.length,
           function: "filterNowAndSevenDays",
         },
         {
-          name: "Tussen 2 jaar en 3 jaar",
-          value: twoYearsToThreeYears.length,
-          function: "filterNowAndSevenDays",
-        },
-        {
-          name: "3 jaar en langer",
-          value: olderThanThreeYears.length,
+          name: "Ouder dan 2 jaar",
+          value: isOlderThanTwoYears.length,
           function: "filterNowAndSevenDays",
         },
       ];
-
-      console.log(objectDateCount);
 
       const objectDateCountFilter = objectDateCount.filter(
         (item) => item.value !== 0
@@ -357,6 +348,21 @@ function App() {
       setCountedDate(json);
     }
   }, [valueFilter, dataMessages]);
+
+  // useEffect(() => {
+  //   if (
+  //     valueFilter &&
+  //     dataMessages &&
+  //     dataMessages.children &&
+  //     dataMessages.children.length > 0
+  //   ) {
+  //     const filterData = dataMessages.children.filter((item) => {
+  //       if (typeof item.from !== undefined && item.from[0]) {
+  //         return item.from[0][1] === valueFilter;
+  //       }
+  //     });
+  //   }
+  // }, []);
 
   if (Cookies.get("token") === undefined) {
     return (
