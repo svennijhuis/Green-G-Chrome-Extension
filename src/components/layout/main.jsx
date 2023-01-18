@@ -4,9 +4,7 @@ import CarAnimation from "../animation/car";
 import BundleBackground from "../svg/bundle-background";
 import CarInformation from "../button/car-information";
 
-function Main({data}) {
-  // if (data) return <section>Loading....</section>;
-
+function Main() {
   return (
     <>
       <section className="flex flex-col gap-3 items-center h-screen relative">
@@ -20,7 +18,7 @@ function Main({data}) {
           20,78 KG CO2
         </h2>
 
-        <BubbleChart data={data} />
+        <BubbleChart />
 
         <CarInformation />
         <CarAnimation />

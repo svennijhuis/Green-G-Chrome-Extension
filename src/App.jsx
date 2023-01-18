@@ -1,11 +1,5 @@
 const google = window.google;
 
-import { differenceInMonths } from "date-fns";
-import {
-  isBetweenOneToTwoYearsOld,
-  isNotOlderThanTwoMonths,
-} from "./functions/date";
-
 import Main from "./components/layout/main";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
@@ -31,6 +25,8 @@ function App() {
     valueFilter,
     setCountedDate,
     countedDate,
+    deleteMessagesId,
+    setDeleteMessagesId,
   } = useDataContext();
 
   useEffect(() => {
@@ -42,7 +38,6 @@ function App() {
   const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
 
   const handleCallbackResponse = (response) => {
-    console.log("encode JWT id token " + response.credential);
     Cookies.set("token", response.credential);
     setToken(Cookies.get("token"));
   };
@@ -77,8 +72,6 @@ function App() {
     );
   }, [useToken]);
 
-  console.log(dataMessages);
-
   useEffect(() => {
     const senderRegex = /(.*) <(.*)>/gm;
     let newJson = emails.map((d) => ({
@@ -96,8 +89,6 @@ function App() {
       date: new Date(
         d.payload.headers.find((element) => element.name === "Date").value
       ),
-      name: "Pineapples",
-      value: 30,
     }));
     const jsonOutput = {
       children: newJson,
@@ -122,7 +113,6 @@ function App() {
           }
         }
       }
-      console.log("from counted", from);
       setCountedSenders(from);
     }
   };
@@ -144,6 +134,21 @@ function App() {
       dataMessages.children &&
       dataMessages.children.length > 0
     ) {
+      // filter data
+      const filterData = dataMessages.children.filter((item) => {
+        if (typeof item.from !== undefined && item.from[0]) {
+          return item.from[0][1] === valueFilter;
+        }
+      });
+
+      const newArray = [];
+
+      filterData.forEach((item) => {
+        newArray.push(item.id);
+      });
+
+      setDeleteMessagesId(newArray);
+
       var oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
@@ -164,14 +169,6 @@ function App() {
 
       var threeYearsAgo = new Date();
       threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
-
-      const filterData = dataMessages.children.filter((item) => {
-        if (typeof item.from !== undefined && item.from[0]) {
-          return item.from[0][1] === valueFilter;
-        }
-      });
-
-      console.log(filterData);
 
       // Nu en zeven dagen
       var nowAndSevenDays = filterData.filter(function (email) {
@@ -247,18 +244,50 @@ function App() {
         return emailDate < threeYearsAgo.getTime();
       });
 
-      console.log(nowAndSevenDays);
-
       const objectDateCount = [
-        { name: "Nu en zeven dagen", value: nowAndSevenDays.length },
-        { name: "8 dagen 30 dagen", value: betweenWeekMonth.length },
-        { name: "Tussen 1 en 3 maanden", value: oneMonthToThreeMonths.length },
-        { name: "Tussen 3 en 6 maanden", value: threeMonthsToSixMonths.length },
-        { name: "Tussen 6 en 12 maanden", value: betweenYearSixMonth.length },
-        { name: "Tussen 1 jaar en 2 jaar", value: oneYearToTwoYears.length },
-        { name: "Tussen 2 jaar en 3 jaar", value: twoYearsToThreeYears.length },
-        { name: "3 jaar en langer", value: olderThanThreeYears.length },
+        {
+          name: "Nu en zeven dagen",
+          value: nowAndSevenDays.length,
+          function: "filterNowAndSevenDays",
+        },
+        {
+          name: "8 dagen 30 dagen",
+          value: betweenWeekMonth.length,
+          function: "filterNowAndSevenDays",
+        },
+        {
+          name: "Tussen 1 en 3 maanden",
+          value: oneMonthToThreeMonths.length,
+          function: "filterNowAndSevenDays",
+        },
+        {
+          name: "Tussen 3 en 6 maanden",
+          value: threeMonthsToSixMonths.length,
+          function: "filterNowAndSevenDays",
+        },
+        {
+          name: "Tussen 6 en 12 maanden",
+          value: betweenYearSixMonth.length,
+          function: "filterNowAndSevenDays",
+        },
+        {
+          name: "Tussen 1 jaar en 2 jaar",
+          value: oneYearToTwoYears.length,
+          function: "filterNowAndSevenDays",
+        },
+        {
+          name: "Tussen 2 jaar en 3 jaar",
+          value: twoYearsToThreeYears.length,
+          function: "filterNowAndSevenDays",
+        },
+        {
+          name: "3 jaar en langer",
+          value: olderThanThreeYears.length,
+          function: "filterNowAndSevenDays",
+        },
       ];
+
+      console.log(objectDateCount);
 
       const objectDateCountFilter = objectDateCount.filter(
         (item) => item.value !== 0
@@ -266,12 +295,8 @@ function App() {
 
       const json = { children: objectDateCountFilter };
       setCountedDate(json);
-      // const json = {
-      //   children: emails
-      // }
-      console.log(json);
     }
-  }, [valueFilter]);
+  }, [valueFilter, dataMessages]);
 
   if (Cookies.get("token") === undefined) {
     return (
@@ -324,7 +349,7 @@ function App() {
     );
   }
 
-  if (countedDate !== undefined) {
+  if (valueFilter && countedDate !== undefined) {
     return (
       <section>
         <MainFilter />

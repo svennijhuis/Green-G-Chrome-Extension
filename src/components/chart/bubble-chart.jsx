@@ -28,8 +28,6 @@ function BubbleChart() {
       });
     const dataBubble = bubble(root);
 
-    console.log(root);
-
     setDataList(root.children);
   }, [countedSenders]);
 
@@ -47,19 +45,7 @@ function BubbleChart() {
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
-  useEffect(() => {
-    if (!dataList === undefined) {
-      console.log("object");
-      const test = dataList.flat().forEach((item) => {
-        item.from[1];
-      });
-
-      console.log(test);
-    }
-  }, [dataList]);
-
   const handleClick = (value) => {
-    console.log(value);
     setValueFilter(value);
     // TODO: Filtering
     // create new component to show date filtered data

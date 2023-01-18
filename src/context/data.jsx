@@ -31,6 +31,8 @@ const DataProvider = ({ children }) => {
 
   const [valueFilter, setValueFilter] = useState();
 
+  const [deleteMessagesId, setDeleteMessagesId] = useState();
+
   const getMessageIds = async (token, collection = []) => {
     const url = new URL(
       "https://www.googleapis.com/gmail/v1/users/me/messages"
@@ -53,7 +55,7 @@ const DataProvider = ({ children }) => {
     const messageIds = data.messages.map(({ id }) => id);
     collection = [...collection, ...messageIds];
 
-    if (data.nextPageToken && collection.length <= 400) {
+    if (data.nextPageToken && collection.length <= 100) {
       return getMessageIds(data.nextPageToken, collection);
     }
 
@@ -110,6 +112,8 @@ const DataProvider = ({ children }) => {
         setDataFilter,
         valueFilter,
         setValueFilter,
+        deleteMessagesId,
+        setDeleteMessagesId,
       }}
     >
       {children}

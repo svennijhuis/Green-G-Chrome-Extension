@@ -10,22 +10,16 @@ function BubbelChartFilter() {
   var diameter = 400;
 
   useEffect(() => {
-    if (countedDate) {
-      console.log(countedDate);
-
-      var root = d3
-        .hierarchy(countedDate)
-        .sum(function (d) {
-          return d.value;
-        })
-        .sort(function (a, b) {
-          return b.value - a.value;
-        });
-
-      console.log(root);
-
-      setDataList(root.children);
-    }
+    var root = d3
+      .hierarchy(countedDate)
+      .sum(function (d) {
+        return d.value;
+      })
+      .sort(function (a, b) {
+        return b.value - a.value;
+      });
+    const dataBubble = bubble(root);
+    setDataList(root.children);
   }, [countedDate]);
 
   if (countedDate) {
@@ -55,7 +49,7 @@ function BubbelChartFilter() {
     // repeat process for creating a new component for single emails
     // Make sure to get the right data to display
   };
-  console.log(dataList);
+
   if (!dataList) {
     return <p>No items to display</p>;
   }
@@ -77,7 +71,7 @@ function BubbelChartFilter() {
               dy=".3em"
               style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
             >
-              {item.value}
+              {item.data.name}
             </text>
           </g>
         </g>
