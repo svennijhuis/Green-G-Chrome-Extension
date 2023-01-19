@@ -16,19 +16,19 @@ function MainFilter() {
   const removeData = async () => {
     const data = deleteMessagesId;
 
-    await fetch(
-      "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + Cookies.get("keyFetch"),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ids: data,
-        }),
-      }
-    );
+    // await fetch(
+    //   "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       Authorization: "Bearer " + Cookies.get("keyFetch"),
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       ids: data,
+    //     }),
+    //   }
+    // );
     setParty("party");
   };
 
