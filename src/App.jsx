@@ -1,7 +1,6 @@
 const google = window.google;
 import Main from "./components/layout/main";
 import { useEffect, useState } from "react";
-import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import GoogleLogin from "./components/layout/google-login";
 import AppLogin from "./components/layout/app-login copy";
@@ -20,6 +19,7 @@ import {
   isOlderThanTwoYearsFilter,
 } from "./functions/date";
 import MainAll from "./components/layout/main-all";
+import StartButton from "./components/svg/start-scherm/start-button";
 
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
@@ -330,13 +330,11 @@ function App() {
   }
 
   if (Cookies.get("keyFetch") === undefined) {
-    const personData = jwt_decode(Cookies.get("token"));
     return (
       <section>
-        <AppLogin name={personData.name}>
-          <button className="text-white text-15" onClick={creatData}>
-            Start met je avontuur met het legen van je mail box van{" "}
-            {personData.email}
+        <AppLogin>
+          <button className="w-[450px] h-auto" onClick={creatData}>
+            <StartButton />
           </button>
         </AppLogin>
       </section>

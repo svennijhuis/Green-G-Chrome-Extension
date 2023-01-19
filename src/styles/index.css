@@ -6,6 +6,16 @@ body {
   margin: 0;
   background-color: #7899ef;
   font-family: "Inter", sans-serif;
+  display: flex;
+}
+
+#root {
+  max-width: 620px;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 text {

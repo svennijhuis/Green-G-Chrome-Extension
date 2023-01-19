@@ -1,0 +1,43 @@
+.block {
+  width: 450px;
+  height: auto;
+
+  position: relative;
+
+  & .block__inner {
+    &_1 {
+      width: 100%;
+      height: 115px;
+      background: #000000;
+      border-radius: 20px;
+      transform: skew(37deg, 7deg);
+      margin-top: 80px;
+    }
+    &_2 {
+      width: 100%;
+      height: 115px;
+      background: #000000;
+      border-radius: 20px;
+      transform: skew(324deg, 9deg) translateY(-9px);
+      margin-top: -1px;
+    }
+
+    &_3 {
+      width: 100%;
+      height: 115px;
+      background: #000000;
+      border-radius: 20px;
+      transform: skew(326deg, 1deg) translateY(9px);
+      margin-top: -40px;
+    }
+
+    &_4 {
+      width: 100%;
+      height: 115px;
+      background: #000000;
+      border-radius: 20px;
+      transform: skew(356deg, 7deg);
+      margin-top: -10px;
+    }
+  }
+}

@@ -1,21 +1,22 @@
 import CarAnimation from "../animation/car";
 import BundleBackground from "../svg/bundle-background";
+import LoginGmailButton from "../svg/login-scherm/google-login-button";
+import LoginGmail from "../svg/login-scherm/login-gmail";
 
 function GoogleLogin({ children }) {
   return (
     <>
       <section className="flex flex-col gap-3 items-center h-screen relative">
-        <div className="relative w-[250px] h-[80px] flex justify-center items-center mt-3">
-          <h1 className="text-center text-23 leading-22 text-white relative z-[15] px-3">
-            Login Google
-          </h1>
-          <div className="absolute top-0 right-0 w-full h-full title-block z-10"></div>
+        <div className="relative w-[400px] h-auto flex justify-center items-center mt-3">
+          <LoginGmail />
         </div>
-        <div className="mt-10 p-2 bg-black rounded-xl border-white border-2">
-          {children}
+        <div className="relative w-[350px] h-auto">
+          <div className="absolute w-full h-auto">
+            <LoginGmailButton />
+          </div>
+          <div className="absolute top-[28px] right-[85px]">{children}</div>
         </div>
 
-        <CarAnimation />
         <BundleBackground />
       </section>
     </>
