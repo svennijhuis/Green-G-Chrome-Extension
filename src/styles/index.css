@@ -5,7 +5,7 @@
 body {
   margin: 0;
   background-color: #7899ef;
-  font-family: "Inter", sans-serif;
+  font-family: "Raleway", sans-serif;
   display: flex;
 }
 
@@ -71,12 +71,18 @@ text {
 }
 
 h1 {
-  font-family: "Londrina Shadow", cursive;
+  font-family: "Rampart One", cursive;
+}
+
+h1.effect {
+  font-family: "Rampart One", cursive;
+  -webkit-text-stroke: 2px;
+  -webkit-text-stroke-color: white;
 }
 
 h2,
 h3,
 h4,
 p {
-  font-family: "Inter", sans-serif;
+  font-family: "Raleway", sans-serif;
 }

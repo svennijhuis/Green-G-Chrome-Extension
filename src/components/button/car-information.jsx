@@ -5,9 +5,11 @@ function CarInformation() {
     <>
       <div className="absolute bottom-0 right-0">
         <div className={styles.block_text}>
-          <p className="text-12 font-black">Jouw gebruik staat gelijk aan</p>
-          <h1 className={`text-30 font-bold ${styles.title}`}>93 km</h1>
-          <p className="text-12 font-black">Jouw gebruik staat gelijk aan</p>
+          <p className="text-16 font-medium italic">
+            jouw CO2 verbruik staat gelijk aan
+          </p>
+          <h1 className={`text-35 ${styles.title}`}>93 km</h1>
+          <p className="text-16 font-medium italic">rijden met de auto</p>
         </div>
         <div className={styles.div_shapes}>
           <div className={styles.div_shapes__inner}>

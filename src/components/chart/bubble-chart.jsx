@@ -14,7 +14,7 @@ function BubbleChart() {
   } = useDataContext();
 
   const [dataList, setDataList] = useState();
-  var diameter = 400;
+  var diameter = 550;
 
   useEffect(() => {
     const chartData = { children: countedSenders };

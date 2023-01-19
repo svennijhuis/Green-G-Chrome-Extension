@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 function BubbelChartFilter() {
   const { valueAll } = useDataContext();
   const [dataList, setDataList] = useState();
-  var diameter = 400;
+  var diameter = 550;
 
   console.log(valueAll);
 

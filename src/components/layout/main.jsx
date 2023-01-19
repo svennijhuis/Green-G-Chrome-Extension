@@ -2,20 +2,18 @@ import BubbleChart from "../chart/bubble-chart";
 import CarAnimation from "../animation/car";
 import BundleBackground from "../svg/bundle-background";
 import CarInformation from "../button/car-information";
+import TitleStartScreen from "../svg/main-screen/title";
 
 function Main() {
   return (
     <>
       <section className="flex flex-col gap-3 items-center h-screen relative">
-        <div className="relative w-[250px] h-[80px] flex justify-center items-center mt-3">
-          <h1 className="text-center text-23 leading-22 text-white relative z-[15] px-3">
-            the carbon footprint of your mailbox:
-          </h1>
-          <div className="absolute top-0 right-0 w-full h-full title-block z-10"></div>
+        <div className="relative w-[350px] h-auto flex mt-4">
+          <TitleStartScreen />
         </div>
-        <h2 className="text-center text-30 leading-22 text-black font-black relative z-[15] px-3 italic">
+        <h1 className="text-center text-50 leading-50 text-black relative z-[15] mb-[-30px] effect">
           20,78 KG CO2
-        </h2>
+        </h1>
 
         <BubbleChart />
 
