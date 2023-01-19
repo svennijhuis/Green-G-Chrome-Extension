@@ -35,6 +35,8 @@ const DataProvider = ({ children }) => {
 
   const [party, setParty] = useState();
 
+  const [co2InGram, setCo2InGram] = useState();
+
   const [deleteMessagesId, setDeleteMessagesId] = useState();
 
   const getMessageIds = async (token, collection = []) => {
@@ -124,6 +126,8 @@ const DataProvider = ({ children }) => {
         setValueAll,
         party,
         setParty,
+        co2InGram,
+        setCo2InGram,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import BundleBackground from "../svg/bundle-background";
 import CarInformation from "../button/car-information";
 import TitleStartScreen from "../svg/main-screen/title";
 
-function Main() {
+function Main({ Co2InGram }) {
   return (
     <>
       <section className="flex flex-col gap-3 items-center h-screen relative">
@@ -12,7 +12,7 @@ function Main() {
           <TitleStartScreen />
         </div>
         <h1 className="text-center text-50 leading-50 text-black relative z-[15] mb-[-30px] effect">
-          20,78 KG CO2
+          {Co2InGram} Gram CO2
         </h1>
 
         <BubbleChart />

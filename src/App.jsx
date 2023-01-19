@@ -24,6 +24,7 @@ import StartButton from "./components/svg/start-scherm/start-button";
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
   const [tokenClient, setTokenClient] = useState({});
+
   const {
     emails,
     getEmailData,
@@ -40,6 +41,8 @@ function App() {
     setValueAll,
     setParty,
     party,
+    co2InGram,
+    setCo2InGram,
   } = useDataContext();
 
   useEffect(() => {
@@ -309,6 +312,24 @@ function App() {
     }
   }, [party]);
 
+  useEffect(() => {
+    if (
+      dataMessages &&
+      dataMessages.children &&
+      dataMessages.children.length > 0
+    ) {
+      const initialValue = 0;
+      const sumWithInitial = dataMessages.children.reduce(
+        (accumulator, currentValue) =>
+          accumulator + currentValue.sizeInGramsOfCo2,
+        initialValue
+      );
+      console.log(sumWithInitial.toFixed(1));
+
+      setCo2InGram(sumWithInitial.toFixed(1));
+    }
+  }, [dataMessages]);
+
   if (party === "party") {
     return (
       <section>
@@ -353,7 +374,7 @@ function App() {
   if (valueFilter === undefined) {
     return (
       <section>
-        <Main />
+        <Main Co2InGram={co2InGram} />
       </section>
     );
   }
