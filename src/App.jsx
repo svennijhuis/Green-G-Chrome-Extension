@@ -1,5 +1,4 @@
 const google = window.google;
-import { differenceInMonths } from "date-fns";
 import Main from "./components/layout/main";
 import { useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
@@ -32,12 +31,15 @@ function App() {
     dataMessages,
     setCountedSenders,
     valueFilter,
+    setValueFilter,
     setCountedDate,
     countedDate,
     deleteMessagesId,
     setDeleteMessagesId,
     valueDate,
     setValueAll,
+    setParty,
+    party,
   } = useDataContext();
 
   useEffect(() => {
@@ -104,6 +106,8 @@ function App() {
     const jsonOutput = {
       children: newJson,
     };
+
+    console.log(jsonOutput);
 
     setDataMessages(jsonOutput);
   }, [emails]);
@@ -281,6 +285,39 @@ function App() {
       }
     }
   }, [valueDate, dataMessages, valueFilter]);
+
+  useEffect(() => {
+    if (party === "party") {
+      console.log(party);
+      const timer = setTimeout(() => {
+        setParty();
+        const resetData = dataMessages.children.filter(
+          (item) => !deleteMessagesId.includes(item.id)
+        );
+        setValueFilter(undefined);
+        setCountedDate(undefined);
+        setValueFilter(undefined);
+        setDeleteMessagesId(undefined);
+
+        const jsonOutput = {
+          children: resetData,
+        };
+
+        setDataMessages(jsonOutput);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [party]);
+
+  if (party === "party") {
+    return (
+      <section>
+        <h1>party</h1>
+        <CarAnimation />
+        <BundleBackground />
+      </section>
+    );
+  }
 
   if (Cookies.get("token") === undefined) {
     return (

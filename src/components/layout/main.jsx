@@ -1,5 +1,4 @@
 import BubbleChart from "../chart/bubble-chart";
-import data from "../../data.json";
 import CarAnimation from "../animation/car";
 import BundleBackground from "../svg/bundle-background";
 import CarInformation from "../button/car-information";

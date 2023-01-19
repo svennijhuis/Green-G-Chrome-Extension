@@ -11,6 +11,7 @@ function MainAll() {
     deleteMessagesId,
     setDeleteMessagesId,
     setValueDate,
+    setParty,
   } = useDataContext();
   const removeFilterData = () => {
     setValueDate(undefined);
@@ -20,19 +21,20 @@ function MainAll() {
     const data = deleteMessagesId;
     console.log(data);
     console.log("test");
-    await fetch(
-      "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + Cookies.get("keyFetch"),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ids: data,
-        }),
-      }
-    );
+    // await fetch(
+    //   "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       Authorization: "Bearer " + Cookies.get("keyFetch"),
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       ids: data,
+    //     }),
+    //   }
+    // );
+    setParty("party");
   };
 
   useEffect(() => {

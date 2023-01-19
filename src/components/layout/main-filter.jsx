@@ -6,7 +6,7 @@ import { useDataContext } from "../../context/data";
 import { useEffect } from "react";
 
 function MainFilter() {
-  const { setValueFilter, deleteMessagesId, setDeleteMessagesId } =
+  const { setValueFilter, deleteMessagesId, setDeleteMessagesId, setParty } =
     useDataContext();
   const removeFilterData = () => {
     setValueFilter();
@@ -17,19 +17,20 @@ function MainFilter() {
     const data = deleteMessagesId;
     console.log(data);
     console.log("test");
-    await fetch(
-      "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + Cookies.get("keyFetch"),
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ids: data,
-        }),
-      }
-    );
+    // await fetch(
+    //   "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       Authorization: "Bearer " + Cookies.get("keyFetch"),
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       ids: data,
+    //     }),
+    //   }
+    // );
+    setParty("party");
   };
 
   useEffect(() => {
