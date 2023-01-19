@@ -159,8 +159,6 @@ function App() {
         }
       });
 
-      console.log(filterData);
-
       const newArray = [];
 
       filterData.forEach((item) => {
@@ -216,7 +214,7 @@ function App() {
       const objectDateCountFilter = objectDateCount.filter(
         (item) => item.value !== 0
       );
-
+      console.log(objectDateCountFilter);
       const json = { children: objectDateCountFilter };
       setCountedDate(json);
     }
@@ -228,7 +226,6 @@ function App() {
       newArray.push(item.id);
     });
     setDeleteMessagesId(newArray);
-    console.log(newArray);
   };
 
   const generateJson = (data) => {
@@ -291,13 +288,11 @@ function App() {
 
   useEffect(() => {
     if (party === "party") {
-      console.log(party);
       const timer = setTimeout(() => {
         setParty();
         const resetData = dataMessages.children.filter(
           (item) => !deleteMessagesId.includes(item.id)
         );
-        setValueFilter(undefined);
         setCountedDate(undefined);
         setValueFilter(undefined);
         setDeleteMessagesId(undefined);

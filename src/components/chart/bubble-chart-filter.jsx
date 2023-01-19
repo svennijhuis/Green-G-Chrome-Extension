@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 function BubbelChartFilter() {
   const { countedDate, setValueDate } = useDataContext();
   const [dataList, setDataList] = useState();
-  var diameter = 500;
+  var diameter = 550;
+
+  console.log(countedDate);
 
   useEffect(() => {
     var root = d3
@@ -18,7 +20,10 @@ function BubbelChartFilter() {
       .sort(function (a, b) {
         return b.value - a.value;
       });
+
     const dataBubble = bubble(root);
+
+    console.log(root.children);
     setDataList(root.children);
   }, [countedDate]);
 
@@ -34,21 +39,10 @@ function BubbelChartFilter() {
       .range(["rgb(233,150,122)", "	rgb(139,0,0)"]);
   }
 
-  var bubble = d3.pack().size([, diameter]).padding(5);
+  var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
   const handleClick = (value) => {
-    console.log(value);
     setValueDate(value);
-
-    // TODO: Filtering
-    // create new component to show date filtered data
-    // filter datamessages on date and get them into the new component
-    // make sure to have at least the date and ID for each message in the filtered data
-    // create click handler for multiple date ranges
-
-    // TODO: Single emails
-    // repeat process for creating a new component for single emails
-    // Make sure to get the right data to display
   };
 
   if (!dataList) {

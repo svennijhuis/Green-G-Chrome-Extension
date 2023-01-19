@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 function WelcomeText() {
   const personData = jwt_decode(Cookies.get("token"));
-  console.log(personData);
   return (
     <>
       <div className={styles.block}>

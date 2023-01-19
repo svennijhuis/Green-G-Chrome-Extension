@@ -19,8 +19,6 @@ function MainAll() {
 
   const removeData = async () => {
     const data = deleteMessagesId;
-    console.log(data);
-    console.log("test");
     // await fetch(
     //   "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
     //   {

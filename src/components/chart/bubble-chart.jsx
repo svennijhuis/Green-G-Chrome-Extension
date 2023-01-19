@@ -18,6 +18,8 @@ function BubbleChart() {
 
   useEffect(() => {
     const chartData = { children: countedSenders };
+
+    console.log(countedSenders);
     var root = d3
       .hierarchy(chartData)
       .sum(function (d) {
@@ -47,15 +49,6 @@ function BubbleChart() {
 
   const handleClick = (value) => {
     setValueFilter(value);
-    // TODO: Filtering
-    // create new component to show date filtered data
-    // filter datamessages on date and get them into the new component
-    // make sure to have at least the date and ID for each message in the filtered data
-    // create click handler for multiple date ranges
-
-    // TODO: Single emails
-    // repeat process for creating a new component for single emails
-    // Make sure to get the right data to display
   };
 
   if (!dataList) {
