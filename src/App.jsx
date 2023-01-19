@@ -20,6 +20,7 @@ import {
   isBetweenOneToTwoYearsOldFilter,
   isOlderThanTwoYearsFilter,
 } from "./functions/date";
+import MainAll from "./components/layout/main-all";
 
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
@@ -36,6 +37,7 @@ function App() {
     deleteMessagesId,
     setDeleteMessagesId,
     valueDate,
+    setValueAll,
   } = useDataContext();
 
   useEffect(() => {
@@ -150,6 +152,8 @@ function App() {
         }
       });
 
+      console.log(filterData);
+
       const newArray = [];
 
       filterData.forEach((item) => {
@@ -157,101 +161,6 @@ function App() {
       });
 
       setDeleteMessagesId(newArray);
-
-      // var oneWeekAgo = new Date();
-      // oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
-      // var oneMonthAgo = new Date();
-      // oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-
-      // var threeMonthsAgo = new Date();
-      // threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-
-      // var sixMonthsAgo = new Date();
-      // sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-
-      // var oneYearAgo = new Date();
-      // oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
-      // var twoYearsAgo = new Date();
-      // twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-
-      // var threeYearsAgo = new Date();
-      // threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3);
-
-      // // Nu en zeven dagen
-      // var nowAndSevenDays = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return emailDate >= oneWeekAgo.getTime() && emailDate <= Date.now();
-      // });
-
-      // // een week geleden en een maand
-      // var betweenWeekMonth = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return (
-      //     emailDate >= oneWeekAgo.getTime() && emailDate < oneMonthAgo.getTime()
-      //   );
-      // });
-
-      // // 1 maand - 3 maanden
-      // var oneMonthToThreeMonths = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return (
-      //     emailDate >= oneMonthAgo.getTime() &&
-      //     emailDate < threeMonthsAgo.getTime()
-      //   );
-      // });
-
-      // //  1 maand - 3 maanden
-      // var oneMonthToThreeMonths = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return (
-      //     emailDate >= oneMonthAgo.getTime() &&
-      //     emailDate < threeMonthsAgo.getTime()
-      //   );
-      // });
-
-      // //  3maand - 6 maanden
-      // var threeMonthsToSixMonths = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return (
-      //     emailDate >= threeMonthsAgo.getTime() &&
-      //     emailDate < sixMonthsAgo.getTime()
-      //   );
-      // });
-
-      // // 6 maanden - 1 jaar
-      // var betweenYearSixMonth = filterData.filter(function (email) {
-      //   oneYearAgo.setDate(oneYearAgo.getDate() - 1);
-      //   var emailDate = new Date(email.date).getTime();
-      //   return (
-      //     emailDate >= oneYearAgo.getTime() &&
-      //     emailDate < sixMonthsAgo.getTime()
-      //   );
-      // });
-
-      // // 1 jaar- 2 jaar
-      // var oneYearToTwoYears = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return (
-      //     emailDate >= oneYearAgo.getTime() && emailDate < twoYearsAgo.getTime()
-      //   );
-      // });
-
-      // // 2 jaar- 3 jaar
-      // var twoYearsToThreeYears = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return (
-      //     emailDate >= twoYearsAgo.getTime() &&
-      //     emailDate < threeYearsAgo.getTime()
-      //   );
-      // });
-
-      // // 3 jaar en langer
-      // var olderThanThreeYears = filterData.filter(function (email) {
-      //   var emailDate = new Date(email.date).getTime();
-      //   return emailDate < threeYearsAgo.getTime();
-      // });
 
       const isNotOlderThanTwoMonths = filterData.filter((mail) =>
         isNotOlderThanTwoMonthsFilter(mail.date)
@@ -269,39 +178,31 @@ function App() {
         isOlderThanTwoYearsFilter(mail.date)
       );
 
-      console.log(
-        isOlderThanTwoYears.length,
-        isBetweenOneToTwoYearsOld.length,
-        isBetweenSixToTwelveMonthsOld.length,
-        isBetweenTwoToSixMonthsOld.length,
-        isNotOlderThanTwoMonths.length
-      );
-
       const objectDateCount = [
         {
           name: "Niet ouder als 2 maanden",
           value: isNotOlderThanTwoMonths.length,
-          function: "filterNowAndSevenDays",
+          function: "isNotOlderThanTwoMonthsFilter",
         },
         {
           name: "Tussen 2 en 6 maanden",
           value: isBetweenTwoToSixMonthsOld.length,
-          function: "filterNowAndSevenDays",
+          function: "isBetweenTwoToSixMonthsOldFilter",
         },
         {
           name: "Tussen 6 en 12 maanden",
           value: isBetweenSixToTwelveMonthsOld.length,
-          function: "filterNowAndSevenDays",
+          function: "isBetweenSixToTwelveMonthsOldFilter",
         },
         {
           name: "Tussen 1 en 2 jaar",
           value: isBetweenOneToTwoYearsOld.length,
-          function: "filterNowAndSevenDays",
+          function: "isBetweenOneToTwoYearsOldFilter",
         },
         {
           name: "Ouder dan 2 jaar",
           value: isOlderThanTwoYears.length,
-          function: "filterNowAndSevenDays",
+          function: "isOlderThanTwoYearsFilter",
         },
       ];
 
@@ -312,22 +213,74 @@ function App() {
       const json = { children: objectDateCountFilter };
       setCountedDate(json);
     }
-  }, [valueFilter, dataMessages]);
+  }, [valueFilter, dataMessages, valueDate]);
 
-  // useEffect(() => {
-  //   if (
-  //     valueFilter &&
-  //     dataMessages &&
-  //     dataMessages.children &&
-  //     dataMessages.children.length > 0
-  //   ) {
-  //     const filterData = dataMessages.children.filter((item) => {
-  //       if (typeof item.from !== undefined && item.from[0]) {
-  //         return item.from[0][1] === valueFilter;
-  //       }
-  //     });
-  //   }
-  // }, []);
+  const getId = (data) => {
+    const newArray = [];
+    data.forEach((item) => {
+      newArray.push(item.id);
+    });
+    setDeleteMessagesId(newArray);
+    console.log(newArray);
+  };
+
+  const generateJson = (data) => {
+    const json = { children: data };
+    console.log(json);
+    setValueAll(json);
+  };
+
+  useEffect(() => {
+    if (
+      valueFilter &&
+      dataMessages &&
+      dataMessages.children &&
+      dataMessages.children.length > 0 &&
+      valueDate !== undefined
+    ) {
+      const filterData = dataMessages.children.filter((item) => {
+        if (typeof item.from !== undefined && item.from[0]) {
+          return item.from[0][1] === valueFilter;
+        }
+      });
+
+      if (valueDate === "isNotOlderThanTwoMonthsFilter") {
+        const filterDateToAllMails = filterData.filter((mail) =>
+          isNotOlderThanTwoMonthsFilter(mail.date)
+        );
+        generateJson(filterDateToAllMails);
+        getId(filterDateToAllMails);
+      }
+      if (valueDate === "isBetweenTwoToSixMonthsOldFilter") {
+        const filterDateToAllMails = filterData.filter((mail) =>
+          isBetweenTwoToSixMonthsOldFilter(mail.date)
+        );
+        generateJson(filterDateToAllMails);
+        getId(filterDateToAllMails);
+      }
+      if (valueDate === "isBetweenSixToTwelveMonthsOldFilter") {
+        const filterDateToAllMails = filterData.filter((mail) =>
+          isBetweenSixToTwelveMonthsOldFilter(mail.date)
+        );
+        generateJson(filterDateToAllMails);
+        getId(filterDateToAllMails);
+      }
+      if (valueDate === "isBetweenOneToTwoYearsOldFilter") {
+        const filterDateToAllMails = filterData.filter((mail) =>
+          isBetweenOneToTwoYearsOldFilter(mail.date)
+        );
+        generateJson(filterDateToAllMails);
+        getId(filterDateToAllMails);
+      }
+      if (valueDate === "isOlderThanTwoYearsFilter") {
+        const filterDateToAllMails = filterData.filter((mail) =>
+          isOlderThanTwoYearsFilter(mail.date)
+        );
+        generateJson(filterDateToAllMails);
+        getId(filterDateToAllMails);
+      }
+    }
+  }, [valueDate, dataMessages, valueFilter]);
 
   if (Cookies.get("token") === undefined) {
     return (
@@ -389,7 +342,7 @@ function App() {
   }
   return (
     <section>
-      <h1>testtest</h1>
+      <MainAll />
     </section>
   );
 }

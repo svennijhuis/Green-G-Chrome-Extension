@@ -1,16 +1,19 @@
 import CarAnimation from "../animation/car";
 import BundleBackground from "../svg/bundle-background";
-import BubbelChartFilter from "../chart/bubble-chart-filter";
 import Cookies from "js-cookie";
 import { useDataContext } from "../../context/data";
 import { useEffect } from "react";
+import BubbelChartFilter from "../chart/bubble-chart-filter-all";
 
-function MainFilter() {
-  const { setValueFilter, deleteMessagesId, setDeleteMessagesId } =
-    useDataContext();
+function MainAll() {
+  const {
+    setValueFilter,
+    deleteMessagesId,
+    setDeleteMessagesId,
+    setValueDate,
+  } = useDataContext();
   const removeFilterData = () => {
-    setValueFilter();
-    setDeleteMessagesId(null);
+    setValueDate(undefined);
   };
 
   const removeData = async () => {
@@ -39,7 +42,7 @@ function MainFilter() {
   return (
     <>
       <section className="flex flex-col gap-3 items-center h-screen relative">
-        <h1>sadffdas</h1>
+        <BubbelChartFilter />
         <button onClick={removeData}>Delete messages</button>
         <button onClick={removeFilterData}>Back</button>
         <CarAnimation />
@@ -48,4 +51,4 @@ function MainFilter() {
     </>
   );
 }
-export default MainFilter;
+export default MainAll;

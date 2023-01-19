@@ -31,6 +31,9 @@ const DataProvider = ({ children }) => {
 
   const [valueFilter, setValueFilter] = useState();
   const [valueDate, setValueDate] = useState();
+  const [valueAll, setValueAll] = useState();
+
+  const [party, setParty] = useState();
 
   const [deleteMessagesId, setDeleteMessagesId] = useState();
 
@@ -117,6 +120,10 @@ const DataProvider = ({ children }) => {
         setDeleteMessagesId,
         valueDate,
         setValueDate,
+        valueAll,
+        setValueAll,
+        party,
+        setParty,
       }}
     >
       {children}

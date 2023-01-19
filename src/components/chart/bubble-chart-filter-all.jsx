@@ -5,30 +5,34 @@ import { useDataContext } from "../../context/data";
 import { useEffect, useState } from "react";
 
 function BubbelChartFilter() {
-  const { countedDate } = useDataContext();
+  const { valueAll } = useDataContext();
   const [dataList, setDataList] = useState();
   var diameter = 400;
 
-  useEffect(() => {
-    var root = d3
-      .hierarchy(countedDate)
-      .sum(function (d) {
-        return d.value;
-      })
-      .sort(function (a, b) {
-        return b.value - a.value;
-      });
-    const dataBubble = bubble(root);
-    setDataList(root.children);
-  }, [countedDate]);
+  console.log(valueAll);
 
-  if (countedDate) {
+  useEffect(() => {
+    if (valueAll) {
+      var root = d3
+        .hierarchy(valueAll)
+        .sum(function (d) {
+          return d.sizeInMegabytes;
+        })
+        .sort(function (a, b) {
+          return b.sizeInMegabytes - a.sizeInMegabytes;
+        });
+      const dataBubble = bubble(root);
+      setDataList(root.children);
+    }
+  }, [valueAll]);
+
+  if (valueAll) {
     var colorScale = d3
       .scaleLinear()
       .domain([
         0,
-        d3.max(countedDate.children, function (d) {
-          return d.value;
+        d3.max(valueAll.children, function (d) {
+          return d.sizeInMegabytes;
         }),
       ])
       .range(["rgb(233,150,122)", "	rgb(139,0,0)"]);
@@ -39,7 +43,7 @@ function BubbelChartFilter() {
   const handleClick = (value) => {
     console.log(value);
 
-    setValueDate();
+    setValueDate(undefined);
 
     // TODO: Filtering
     // create new component to show date filtered data
@@ -64,16 +68,16 @@ function BubbelChartFilter() {
           key={index}
           transform={`translate(${item.x + " " + item.y})`}
         >
-          <g
-            className={styles.graph}
-            onClick={() => handleClick(item.data.name)}
-          >
-            <circle r={item.r} style={{ fill: `${colorScale(item.value)}` }} />
+          <g className={styles.graph} onClick={() => handleClick(item.data.id)}>
+            <circle
+              r={item.r}
+              style={{ fill: `${colorScale(item.sizeInMegabytes)}` }}
+            />
             <text
               dy=".3em"
               style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
             >
-              {item.data.name}
+              {item.data.id}
             </text>
           </g>
         </g>

@@ -65,7 +65,7 @@ function BubbelChartFilter() {
         >
           <g
             className={styles.graph}
-            onClick={() => handleClick(item.data.name)}
+            onClick={() => handleClick(item.data.function)}
           >
             <circle r={item.r} style={{ fill: `${colorScale(item.value)}` }} />
             <text
