@@ -9,8 +9,8 @@ function MainFilter() {
   const { setValueFilter, deleteMessagesId, setDeleteMessagesId, setParty } =
     useDataContext();
   const removeFilterData = () => {
-    setValueFilter();
-    setDeleteMessagesId(null);
+    setValueFilter(undefined);
+    setDeleteMessagesId(undefined);
   };
 
   const removeData = async () => {

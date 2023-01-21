@@ -5,9 +5,13 @@ import { useDataContext } from "../../context/data";
 import { useEffect, useState } from "react";
 
 function BubbelChartFilter() {
-  const { valueAll } = useDataContext();
+  const { valueAll, deleteMessagesId, setDeleteMessagesId } = useDataContext();
   const [dataList, setDataList] = useState();
+  const [stroke, setStroke] = useState();
+  const [stateColor, useStateColor] = useState();
   var diameter = 550;
+
+  console.log("delarrayid", deleteMessagesId);
 
   console.log(valueAll);
 
@@ -40,9 +44,38 @@ function BubbelChartFilter() {
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
-  const handleClick = (value) => {
-    setValueDate(undefined);
+  useEffect(() => {
+    setStroke(deleteMessagesId);
+  }, []);
+
+  function arrayRemove(arr, value) {
+    return arr.filter(function (ele) {
+      return ele != value;
+    });
+  }
+
+  // const handleClick = (value) => {
+  //   if (stroke.includes(value)) {
+  //     const test = arrayRemove(stroke, value);
+  //     setStroke(test);
+  //   } else {
+  //     console.log(value);
+  //     const test = stroke.push(value);
+  //     setStroke(test);
+  //   }
+  // };
+
+  const handleClick = (id) => {
+    if (deleteMessagesId.includes(id)) {
+      setStroke(deleteMessagesId.filter((i) => i !== id));
+      setDeleteMessagesId(deleteMessagesId.filter((i) => i !== id));
+    } else {
+      setStroke([...stroke, id]);
+      setDeleteMessagesId([...deleteMessagesId, id]);
+    }
   };
+
+  console.log(stroke);
 
   if (!dataList) {
     return <p>No items to display</p>;
@@ -59,8 +92,13 @@ function BubbelChartFilter() {
           <g className={styles.graph} onClick={() => handleClick(item.data.id)}>
             <circle
               r={item.r}
-              style={{ fill: `${colorScale(item.sizeInMegabytes)}` }}
+              stroke={stroke.includes(item.data.id) ? "Red" : "Black"}
+              strokeWidth="3"
+              style={{
+                fill: `${colorScale(item.sizeInMegabytes)}`,
+              }}
             />
+
             <text
               dy=".3em"
               style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}

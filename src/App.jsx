@@ -43,6 +43,8 @@ function App() {
     party,
     co2InGram,
     setCo2InGram,
+    countedSenders,
+    setValueDate,
   } = useDataContext();
 
   useEffect(() => {
@@ -294,8 +296,11 @@ function App() {
           (item) => !deleteMessagesId.includes(item.id)
         );
         setCountedDate(undefined);
+        setValueDate(undefined);
         setValueFilter(undefined);
         setDeleteMessagesId(undefined);
+
+        setCountedSenders(undefined);
 
         const jsonOutput = {
           children: resetData,
