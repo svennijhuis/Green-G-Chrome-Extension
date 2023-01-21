@@ -17,6 +17,12 @@ function BubbelChartFilter() {
 
   useEffect(() => {
     if (valueAll) {
+      const newArray = [];
+      valueAll.children.forEach((item) => {
+        newArray.push(item.id);
+      });
+      setDeleteMessagesId(newArray);
+
       var root = d3
         .hierarchy(valueAll)
         .sum(function (d) {
