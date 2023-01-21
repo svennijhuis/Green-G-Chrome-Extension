@@ -1,14 +1,23 @@
 import * as d3 from "d3";
 import styles from "./Chart.module.scss";
 
+import throttle from "lodash/throttle";
+
 import { useDataContext } from "../../context/data";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 function BubbelChartFilter() {
   const { valueAll, deleteMessagesId, setDeleteMessagesId } = useDataContext();
   const [dataList, setDataList] = useState();
   const [stroke, setStroke] = useState();
-  const [stateColor, useStateColor] = useState();
+  const [snippet, setSnippet] = useState();
+  const [from, setFrom] = useState();
+
+  const [enter, setEnter] = useState();
+
+  const [location, setLocation] = useState({ x: 0, y: 0 });
+  const [divStyle, setDivStyle] = useState({});
+
   var diameter = 550;
 
   console.log("delarrayid", deleteMessagesId);
@@ -81,40 +90,107 @@ function BubbelChartFilter() {
     }
   };
 
-  console.log(stroke);
+  // const addMetaData = (e, snippet, from) => {
+  //   setSnippet(snippet);
+  //   setFrom(from);
+
+  //   const x = e.clientX;
+  //   console.log(e.clientX);
+  //   const y = e.clientY;
+  //   setLocation({ x, y });
+  //   setDivStyle({
+  //     left: `${x}px`,
+  //     top: `${y}px`,
+  //   });
+  // };
+  const addMetaData = useCallback(
+    throttle((e, snippet, from) => {
+      setSnippet(snippet);
+      setFrom(from);
+
+      setEnter(true);
+
+      const x = e.clientX;
+      console.log(e.clientX);
+      const y = e.clientY;
+      setLocation({ x, y });
+      if (e.clientX > 275) {
+        setDivStyle({
+          left: `${x - 250}px`,
+          top: `${y + 10}px`,
+        });
+      } else {
+        setDivStyle({
+          left: `${x}px`,
+          top: `${y + 10}px`,
+          opacity: 1,
+          visibility: "visible",
+        });
+      }
+    }, 100),
+    []
+  );
+
+  const handleHoverOff = () => {
+    setEnter(false);
+    setDivStyle({
+      // left: `${x}px`,
+      // top: `${y + 10}px`,
+      opacity: 0,
+      visibility: "hidden",
+    });
+  };
+
+  console.log(location);
 
   if (!dataList) {
     return <p>No items to display</p>;
   }
 
   return (
-    <svg className="chart-svg" width={diameter} height={diameter}>
-      {dataList.map((item, index) => (
-        <g
-          className={styles.node}
-          key={index}
-          transform={`translate(${item.x + " " + item.y})`}
-        >
-          <g className={styles.graph} onClick={() => handleClick(item.data.id)}>
-            <circle
-              r={item.r}
-              stroke={stroke.includes(item.data.id) ? "Red" : "Black"}
-              strokeWidth="3"
-              style={{
-                fill: `${colorScale(item.sizeInMegabytes)}`,
-              }}
-            />
-
-            <text
-              dy=".3em"
-              style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
+    <>
+      <svg className="chart-svg" width={diameter} height={diameter}>
+        {dataList.map((item, index) => (
+          <g
+            className={styles.node}
+            key={index}
+            transform={`translate(${item.x + " " + item.y})`}
+          >
+            <g
+              className={styles.graph}
+              onClick={() => handleClick(item.data.id)}
+              onMouseOver={(e) =>
+                addMetaData(e, item.data.snippet, item.data.from[0][1])
+              }
             >
-              {item.data.id}
-            </text>
+              <circle
+                onMouseLeave={handleHoverOff}
+                r={item.r}
+                stroke={stroke.includes(item.data.id) ? "Red" : "Black"}
+                strokeWidth="3"
+                style={{
+                  fill: `${colorScale(item.sizeInMegabytes)}`,
+                }}
+              />
+
+              {/* <text
+                dy=".3em"
+                style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
+              >
+                {item.data.id}
+              </text> */}
+            </g>
           </g>
-        </g>
-      ))}
-    </svg>
+        ))}
+      </svg>
+      <div
+        style={divStyle}
+        className="flex flex-col bg-white p-2 w-[250px] rounded-lg border-black border-2 absolute transition-opacity"
+      >
+        <h1 className="text-16 mb-1">{from}</h1>
+        <p className="text-14 mb-1 font-medium">{snippet}</p>
+      </div>
+    </>
   );
 }
 export default BubbelChartFilter;
