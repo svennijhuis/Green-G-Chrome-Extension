@@ -157,7 +157,7 @@ function BubbleChart() {
       </svg>
       <div
         style={divStyle}
-        className="flex flex-col bg-black p-2 w-[250px] rounded-lg border-white border-2 absolute transition"
+        className="flex flex-col bg-black p-2 w-[250px] rounded-lg z-[101] border-white border-2 absolute transition"
       >
         <h2 className="text-20 mb-1 text-white font-bold">{name}</h2>
         <p className="text-18  text-white font-medium pb-1">
