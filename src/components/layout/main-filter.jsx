@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import Modal from "../modalbox/modal-box-delete";
 import Back from "../button/back";
 import Delete from "../button/delete";
+import YesButton from "../button/yes-button";
+import NoButton from "../button/no-button";
 
 function MainFilter() {
   const {
@@ -74,6 +76,10 @@ function MainFilter() {
 
   useEffect(() => {}, [deleteMessagesId]);
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <section className="flex flex-col items-center h-screen relative">
@@ -104,10 +110,24 @@ function MainFilter() {
       </section>
 
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <h1>Modal Title</h1>
-          <button onClick={removeData}>Delete messages</button>
-        </Modal>
+        <>
+          <div className="absolute bg-black/80 top-0 bottom-0 right-0 left-0 w-full h-full z-[12]"></div>
+          <Modal>
+            <div className="flex flex-col h-full ">
+              <h2 className="text-white text-24 leading-24 text-bold text-center w-full pt-9 px-10">
+                {deleteMessagesId.length} mails verwijderen?
+              </h2>
+              <div className="flex flex-row gap-2 justify-between px-3 mt-auto pb-6">
+                <button className="w-[200px] ml-2" onClick={closeModal}>
+                  <NoButton />
+                </button>
+                <button className="w-[200px] mr-2" onClick={removeData}>
+                  <YesButton />
+                </button>
+              </div>
+            </div>
+          </Modal>
+        </>
       )}
     </>
   );

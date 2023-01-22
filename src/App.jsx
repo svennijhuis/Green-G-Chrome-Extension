@@ -187,27 +187,27 @@ function App() {
 
       const objectDateCount = [
         {
-          name: "Niet ouder als 2 maanden",
+          name: "<2 Maanden",
           value: isNotOlderThanTwoMonths.length,
           function: "isNotOlderThanTwoMonthsFilter",
         },
         {
-          name: "Tussen 2 en 6 maanden",
+          name: "2-6 Maanden",
           value: isBetweenTwoToSixMonthsOld.length,
           function: "isBetweenTwoToSixMonthsOldFilter",
         },
         {
-          name: "Tussen 6 en 12 maanden",
+          name: "6 - 12 Maanden",
           value: isBetweenSixToTwelveMonthsOld.length,
           function: "isBetweenSixToTwelveMonthsOldFilter",
         },
         {
-          name: "Tussen 1 en 2 jaar",
+          name: "1 - 2 Jaar",
           value: isBetweenOneToTwoYearsOld.length,
           function: "isBetweenOneToTwoYearsOldFilter",
         },
         {
-          name: "Ouder dan 2 jaar",
+          name: ">2 Jaar",
           value: isOlderThanTwoYears.length,
           function: "isOlderThanTwoYearsFilter",
         },

@@ -22,7 +22,7 @@ function BubbelChartFilter() {
     visibility: "hidden",
   });
 
-  var diameter = 500;
+  var diameter = 460;
 
   console.log("delarrayid", deleteMessagesId);
 
@@ -49,17 +49,17 @@ function BubbelChartFilter() {
     }
   }, [valueAll]);
 
-  if (valueAll) {
-    var colorScale = d3
-      .scaleLinear()
-      .domain([
-        0,
-        d3.max(valueAll.children, function (d) {
-          return d.sizeInMegabytes;
-        }),
-      ])
-      .range(["rgb(71, 187, 94)", "rgb(46, 73, 123)"]);
-  }
+  // if (valueAll) {
+  //   var colorScale = d3
+  //     .scaleLinear()
+  //     .domain([
+  //       0,
+  //       d3.max(valueAll.children, function (d) {
+  //         return d.sizeInMegabytes;
+  //       }),
+  //     ])
+  //     .range(["rgb(71, 187, 94)", "rgb(46, 73, 123)"]);
+  // }
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
 
@@ -170,11 +170,17 @@ function BubbelChartFilter() {
               <circle
                 onMouseLeave={handleHoverOff}
                 r={item.r}
-                stroke={stroke.includes(item.data.id) ? "Red" : "Black"}
+                stroke={
+                  stroke.includes(item.data.id)
+                    ? "rgb(46, 73, 123)"
+                    : "#363f8ab3"
+                }
                 strokeWidth="3"
-                style={{
-                  fill: `${colorScale(item.sizeInMegabytes)}`,
-                }}
+                fill={
+                  stroke.includes(item.data.id)
+                    ? "rgb(46, 73, 123)"
+                    : "#363f8ab3"
+                }
               />
             </g>
           </g>
@@ -182,10 +188,10 @@ function BubbelChartFilter() {
       </svg>
       <div
         style={divStyle}
-        className="flex flex-col bg-white p-2 w-[250px] rounded-lg border-black border-2 absolute transition-opacity"
+        className="flex flex-col bg-black p-2 w-[275px] rounded-lg border-black border-2 absolute transition-opacity"
       >
-        <h1 className="text-16 mb-1">{from}</h1>
-        <p className="text-14 mb-1 font-medium">{snippet}</p>
+        <h2 className="text-18 mb-1 text-white font-bold">{from}</h2>
+        <p className="text-15  text-white font-medium pb-1">{snippet}</p>
       </div>
     </>
   );
