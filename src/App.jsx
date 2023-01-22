@@ -25,6 +25,8 @@ function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
   const [tokenClient, setTokenClient] = useState({});
 
+  const [timerClock, setTimerClock] = useState(true);
+
   const {
     emails,
     getEmailData,
@@ -301,13 +303,13 @@ function App() {
         setDeleteMessagesId(undefined);
 
         setCountedSenders(undefined);
-
+        setTimerClock(true);
         const jsonOutput = {
           children: resetData,
         };
 
         setDataMessages(jsonOutput);
-      }, 4000);
+      }, 6000);
       return () => clearTimeout(timer);
     }
   }, [party]);
@@ -330,11 +332,32 @@ function App() {
     }
   }, [dataMessages]);
 
+  useEffect(() => {
+    if (party === "party") {
+      const timer = setTimeout(() => {
+        setTimerClock(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [party]);
+
   if (party === "party") {
     return (
-      <section>
-        <h1>party</h1>
-        <CarAnimation />
+      <section className="relative h-screen w-full flex flex-col">
+        {timerClock ? (
+          <div>animatie</div>
+        ) : (
+          <div className="relative w-min h-min mx-auto my-auto">
+            <div className="bg-block-value mx-auto mb-2 relative"></div>
+
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <h2 className="text-white text-28 leading-28 text-bold text-start w-full pr-1">
+                {deleteMessagesId.length} mails verwijderd
+              </h2>
+            </div>
+          </div>
+        )}
+
         <BundleBackground />
       </section>
     );
