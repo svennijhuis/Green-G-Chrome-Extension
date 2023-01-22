@@ -7,7 +7,8 @@ import { useDataContext } from "../../context/data";
 import { useEffect, useState, useCallback } from "react";
 
 function BubbelChartFilter() {
-  const { valueAll, deleteMessagesId, setDeleteMessagesId } = useDataContext();
+  const { valueAll, deleteMessagesId, setDeleteMessagesId, valueDate } =
+    useDataContext();
   const [dataList, setDataList] = useState();
   const [stroke, setStroke] = useState();
   const [snippet, setSnippet] = useState();
@@ -16,9 +17,12 @@ function BubbelChartFilter() {
   const [enter, setEnter] = useState();
 
   const [location, setLocation] = useState({ x: 0, y: 0 });
-  const [divStyle, setDivStyle] = useState({});
+  const [divStyle, setDivStyle] = useState({
+    opacity: 0,
+    visibility: "hidden",
+  });
 
-  var diameter = 550;
+  var diameter = 500;
 
   console.log("delarrayid", deleteMessagesId);
 
@@ -54,7 +58,7 @@ function BubbelChartFilter() {
           return d.sizeInMegabytes;
         }),
       ])
-      .range(["rgb(233,150,122)", "	rgb(139,0,0)"]);
+      .range(["rgb(71, 187, 94)", "rgb(46, 73, 123)"]);
   }
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
@@ -172,13 +176,6 @@ function BubbelChartFilter() {
                   fill: `${colorScale(item.sizeInMegabytes)}`,
                 }}
               />
-
-              {/* <text
-                dy=".3em"
-                style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
-              >
-                {item.data.id}
-              </text> */}
             </g>
           </g>
         ))}

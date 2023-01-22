@@ -1,8 +1,10 @@
 import * as d3 from "d3";
 import styles from "./Chart.module.scss";
 
+import throttle from "lodash/throttle";
+
 import { useDataContext } from "../../context/data";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 
 function BubbleChart() {
   const {
@@ -14,6 +16,18 @@ function BubbleChart() {
   } = useDataContext();
 
   const [dataList, setDataList] = useState();
+  const [count, setCount] = useState();
+  const [name, setName] = useState();
+
+  const [enter, setEnter] = useState();
+
+  const [location, setLocation] = useState({ x: 0, y: 0 });
+  const [divStyle, setDivStyle] = useState({
+    opacity: 0,
+    visibility: "hidden",
+  });
+  const [textWidths, setTextWidths] = useState([]);
+  const textRefs = useRef([]);
   var diameter = 550;
 
   useEffect(() => {
@@ -42,7 +56,7 @@ function BubbleChart() {
           return d.value;
         }),
       ])
-      .range(["rgb(233,150,122)", "	rgb(139,0,0)"]);
+      .range(["rgb(71, 187, 94)", "rgb(46, 73, 123)"]);
   }
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
@@ -51,33 +65,104 @@ function BubbleChart() {
     setValueFilter(value);
   };
 
+  useEffect(() => {
+    setTextWidths(
+      textRefs.current.map((textRef) => (textRef ? textRef.getBBox().width : 0))
+    );
+
+    console.log(textWidths[1]);
+  }, [dataList, textRefs]);
+
+  const addMetaData = useCallback(
+    throttle((e, count, name) => {
+      setCount(count);
+      setName(name);
+
+      setEnter(true);
+
+      const x = e.clientX;
+      console.log(e.clientX);
+      const y = e.clientY;
+      setLocation({ x, y });
+      if (e.clientX > 275) {
+        setDivStyle({
+          left: `${x - 250}px`,
+          top: `${y + 10}px`,
+        });
+      } else {
+        setDivStyle({
+          left: `${x}px`,
+          top: `${y + 10}px`,
+          opacity: 1,
+          visibility: "visible",
+        });
+      }
+    }, 100),
+    []
+  );
+
+  const handleHoverOff = () => {
+    setEnter(false);
+    setDivStyle({
+      // left: `${x}px`,
+      // top: `${y + 10}px`,
+      opacity: 0,
+      visibility: "hidden",
+    });
+  };
+
   if (!dataList) {
     return <p>No items to display</p>;
   }
 
   return (
-    <svg className="chart-svg" width={diameter} height={diameter}>
-      {dataList.map((item, index) => (
-        <g
-          className={styles.node}
-          key={index}
-          transform={`translate(${item.x + " " + item.y})`}
-        >
+    <>
+      <svg className="chart-svg" width={diameter} height={diameter}>
+        {dataList.map((item, index) => (
           <g
-            className={styles.graph}
-            onClick={() => handleClick(item.data.name)}
+            className={styles.node}
+            key={index}
+            transform={`translate(${item.x + " " + item.y})`}
           >
-            <circle r={item.r} style={{ fill: `${colorScale(item.value)}` }} />
-            <text
-              dy=".3em"
-              style={{ textAnchor: "middle", fill: "rgb(255, 255, 255)" }}
+            <g
+              className={styles.graph}
+              onClick={() => handleClick(item.data.name)}
+              onMouseOver={(e) =>
+                addMetaData(e, item.data.value, item.data.name)
+              }
             >
-              {item.data.name}
-            </text>
+              <circle
+                onMouseLeave={handleHoverOff}
+                r={item.r}
+                style={{ fill: `${colorScale(item.value)}` }}
+              />
+              <text
+                className={`w-min ${
+                  item.r * 2 <= textWidths[index] ? " hidden" : ""
+                }`}
+                ref={(el) => {
+                  textRefs.current[index] = el;
+                }}
+                dy=".3em"
+                style={{
+                  textAnchor: "middle",
+                  fill: "rgb(255, 255, 255)",
+                }}
+              >
+                {item.data.name}
+              </text>
+            </g>
           </g>
-        </g>
-      ))}
-    </svg>
+        ))}
+      </svg>
+      <div
+        style={divStyle}
+        className="flex flex-col bg-white p-2 w-[250px] rounded-lg border-black border-2 absolute transition-opacity"
+      >
+        <h1 className="text-16 mb-1">{name}</h1>
+        <p className="text-14 mb-1 font-medium">Aantal mails: {count}</p>
+      </div>
+    </>
   );
 }
 export default BubbleChart;

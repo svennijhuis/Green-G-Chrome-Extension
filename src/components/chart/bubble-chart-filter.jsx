@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 function BubbelChartFilter() {
   const { countedDate, setValueDate } = useDataContext();
   const [dataList, setDataList] = useState();
-  var diameter = 550;
+  var diameter = 460;
 
   console.log("dateFirst", countedDate);
 
@@ -36,7 +36,7 @@ function BubbelChartFilter() {
           return d.value;
         }),
       ])
-      .range(["rgb(233,150,122)", "	rgb(139,0,0)"]);
+      .range(["rgb(71, 187, 94)", "rgb(46, 73, 123)"]);
   }
 
   var bubble = d3.pack().size([diameter, diameter]).padding(5);
