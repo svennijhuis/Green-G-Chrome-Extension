@@ -82,7 +82,7 @@ function App() {
     setTokenClient(
       google.accounts.oauth2.initTokenClient({
         client_id: client_id,
-        apiKey: import.meta.env.VITE_API_KEY,
+        apiKey: process.env.VITE_API_KEY,
         scope: SCOPES,
         callback: async (tokenResponse) => {
           if (tokenResponse && tokenResponse.access_token) {
