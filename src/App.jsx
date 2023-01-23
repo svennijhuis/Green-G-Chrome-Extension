@@ -6,8 +6,8 @@ import GoogleLogin from "./components/layout/google-login";
 import AppLogin from "./components/layout/app-login copy";
 import { useDataContext } from "./context/data";
 import LoadingAnimation from "./components/animation/loading";
-import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-dotenv.config();
+// import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+// dotenv.config();
 import CarAnimation from "./components/animation/car";
 import BundleBackground from "./components/svg/bundle-background";
 import MainFilter from "./components/layout/main-filter";
