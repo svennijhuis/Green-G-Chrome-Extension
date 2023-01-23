@@ -24,10 +24,6 @@ function BubbelChartFilter() {
 
   var diameter = 460;
 
-  console.log("delarrayid", deleteMessagesId);
-
-  console.log(valueAll);
-
   useEffect(() => {
     if (valueAll) {
       const newArray = [];
@@ -73,17 +69,6 @@ function BubbelChartFilter() {
     });
   }
 
-  // const handleClick = (value) => {
-  //   if (stroke.includes(value)) {
-  //     const test = arrayRemove(stroke, value);
-  //     setStroke(test);
-  //   } else {
-  //     console.log(value);
-  //     const test = stroke.push(value);
-  //     setStroke(test);
-  //   }
-  // };
-
   const handleClick = (id) => {
     if (deleteMessagesId.includes(id)) {
       setStroke(deleteMessagesId.filter((i) => i !== id));
@@ -94,19 +79,6 @@ function BubbelChartFilter() {
     }
   };
 
-  // const addMetaData = (e, snippet, from) => {
-  //   setSnippet(snippet);
-  //   setFrom(from);
-
-  //   const x = e.clientX;
-  //   console.log(e.clientX);
-  //   const y = e.clientY;
-  //   setLocation({ x, y });
-  //   setDivStyle({
-  //     left: `${x}px`,
-  //     top: `${y}px`,
-  //   });
-  // };
   const addMetaData = useCallback(
     throttle((e, snippet, from) => {
       setSnippet(snippet);
@@ -115,7 +87,6 @@ function BubbelChartFilter() {
       setEnter(true);
 
       const x = e.clientX;
-      console.log(e.clientX);
       const y = e.clientY;
       setLocation({ x, y });
       if (e.clientX > 275) {
@@ -144,8 +115,6 @@ function BubbelChartFilter() {
       visibility: "hidden",
     });
   };
-
-  console.log(location);
 
   if (!dataList) {
     return <p>No items to display</p>;

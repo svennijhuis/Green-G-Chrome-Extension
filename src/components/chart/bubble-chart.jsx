@@ -33,7 +33,6 @@ function BubbleChart() {
   useEffect(() => {
     const chartData = { children: countedSenders };
 
-    console.log(countedSenders);
     var root = d3
       .hierarchy(chartData)
       .sum(function (d) {
@@ -69,8 +68,6 @@ function BubbleChart() {
     setTextWidths(
       textRefs.current.map((textRef) => (textRef ? textRef.getBBox().width : 0))
     );
-
-    console.log(textWidths[1]);
   }, [dataList, textRefs]);
 
   const addMetaData = useCallback(
@@ -81,7 +78,6 @@ function BubbleChart() {
       setEnter(true);
 
       const x = e.clientX;
-      console.log(e.clientX);
       const y = e.clientY;
       setLocation({ x, y });
       if (e.clientX > 275) {

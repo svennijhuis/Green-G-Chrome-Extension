@@ -66,7 +66,6 @@ function MainAll() {
   }, [valueDate]);
 
   useEffect(() => {
-    console.log(deleteMessagesId);
     setCount(deleteMessagesId.length);
   }, [deleteMessagesId]);
 

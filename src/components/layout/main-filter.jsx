@@ -53,8 +53,6 @@ function MainFilter() {
     }
   }, [data]);
 
-  console.log(data);
-
   const removeData = async () => {
     const data = deleteMessagesId;
 

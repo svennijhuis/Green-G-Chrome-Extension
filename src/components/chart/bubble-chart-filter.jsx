@@ -9,8 +9,6 @@ function BubbelChartFilter() {
   const [dataList, setDataList] = useState();
   var diameter = 460;
 
-  console.log("dateFirst", countedDate);
-
   useEffect(() => {
     var root = d3
       .hierarchy(countedDate)
@@ -23,7 +21,6 @@ function BubbelChartFilter() {
 
     const dataBubble = bubble(root);
 
-    console.log("date", root.children);
     setDataList(root.children);
   }, [countedDate]);
 
