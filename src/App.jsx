@@ -56,7 +56,7 @@ function App() {
     Cookies.remove("keyFetch");
   }, []);
 
-  const client_id = import.meta.env.VITE_CLIENT_ID;
+  const client_id = process.env.VITE_CLIENT_ID;
   const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
 
   const handleCallbackResponse = (response) => {
