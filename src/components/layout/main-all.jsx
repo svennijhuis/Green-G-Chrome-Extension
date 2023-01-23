@@ -9,6 +9,7 @@ import Back from "../button/back";
 import Delete from "../button/delete";
 import YesButton from "../button/yes-button";
 import NoButton from "../button/no-button";
+import DeleteSelectie from "../button/delete-selectie";
 
 function MainAll() {
   const {
@@ -94,7 +95,7 @@ function MainAll() {
         </div>
         <BubbelChartFilter />
         <button className="w-[350px]" onClick={() => setIsModalOpen(true)}>
-          <Delete />
+          <DeleteSelectie />
         </button>
         <button className="w-[200px]" onClick={removeFilterData}>
           <Back />
