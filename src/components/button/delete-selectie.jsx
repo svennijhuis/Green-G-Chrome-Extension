@@ -1,4 +1,4 @@
-function BackSelectie() {
+function DeleteSelectie() {
   return (
     <svg
       width="100%"
@@ -32,4 +32,4 @@ function BackSelectie() {
     </svg>
   );
 }
-export default BackSelectie;
+export default DeleteSelectie;
