@@ -20,6 +20,8 @@ import {
 } from "./functions/date";
 import MainAll from "./components/layout/main-all";
 import StartButton from "./components/svg/start-scherm/start-button";
+import Confetti from "./components/animation/confetti";
+import Bubble from "./components/animation/bubble";
 
 function App() {
   const [useToken, setToken] = useState(Cookies.get("token"));
@@ -336,7 +338,7 @@ function App() {
     if (party === "party") {
       const timer = setTimeout(() => {
         setTimerClock(false);
-      }, 4000);
+      }, 2800);
       return () => clearTimeout(timer);
     }
   }, [party]);
@@ -345,17 +347,20 @@ function App() {
     return (
       <section className="relative h-screen w-full flex flex-col">
         {timerClock ? (
-          <div>animatie</div>
+          <Bubble />
         ) : (
-          <div className="relative w-min h-min mx-auto my-auto">
-            <div className="bg-block-value mx-auto mb-2 relative"></div>
+          <>
+            <Confetti />
+            <div className="relative w-min h-min mx-auto my-auto">
+              <div className="bg-block-value mx-auto mb-2 relative"></div>
 
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <h2 className="text-white text-28 leading-28 text-bold text-start w-full pr-1">
-                {deleteMessagesId.length} mails verwijderd
-              </h2>
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <h2 className="text-white text-28 leading-28 text-bold text-start w-full pr-1">
+                  {deleteMessagesId.length} mails verwijderd
+                </h2>
+              </div>
             </div>
-          </div>
+          </>
         )}
 
         <BundleBackground />

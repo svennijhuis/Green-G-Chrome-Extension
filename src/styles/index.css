@@ -104,13 +104,14 @@ p {
   border: 2px solid white;
 }
 
-circle {
+circle,
+text {
   opacity: 1;
   transition: 0.3s;
   cursor: pointer;
 }
 
-cirkle:hover {
+circle:hover {
   opacity: 0.8;
   transition: 0.3s;
 }
