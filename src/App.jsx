@@ -6,8 +6,7 @@ import GoogleLogin from "./components/layout/google-login";
 import AppLogin from "./components/layout/app-login copy";
 import { useDataContext } from "./context/data";
 import LoadingAnimation from "./components/animation/loading";
-// import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-// dotenv.config();
+
 import CarAnimation from "./components/animation/car";
 import BundleBackground from "./components/svg/bundle-background";
 import MainFilter from "./components/layout/main-filter";
@@ -57,7 +56,7 @@ function App() {
     Cookies.remove("keyFetch");
   }, []);
 
-  const client_id = process.env.CLIENT_ID;
+  const client_id = import.meta.env.VITE_CLIENT_ID;
   const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
 
   const handleCallbackResponse = (response) => {
@@ -83,7 +82,7 @@ function App() {
     setTokenClient(
       google.accounts.oauth2.initTokenClient({
         client_id: client_id,
-        apiKey: process.env.API_KEY,
+        apiKey: import.meta.env.VITE_API_KEY,
         scope: SCOPES,
         callback: async (tokenResponse) => {
           if (tokenResponse && tokenResponse.access_token) {
