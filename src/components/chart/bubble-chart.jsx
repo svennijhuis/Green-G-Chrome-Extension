@@ -28,7 +28,7 @@ function BubbleChart() {
   });
   const [textWidths, setTextWidths] = useState([]);
   const textRefs = useRef([]);
-  var diameter = 550;
+  var diameter = 420;
 
   useEffect(() => {
     const chartData = { children: countedSenders };

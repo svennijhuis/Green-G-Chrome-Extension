@@ -1,5 +1,5 @@
 .block {
-  width: 450px;
+  width: 360px;
   height: auto;
 
   position: relative;
@@ -7,15 +7,15 @@
   & .block__inner {
     &_1 {
       width: 100%;
-      height: 115px;
+      height: 90px;
       background: #000000;
       border-radius: 20px;
       transform: skew(37deg, 7deg);
-      margin-top: 80px;
+      margin-top: 40px;
     }
     &_2 {
       width: 100%;
-      height: 115px;
+      height: 90px;
       background: #000000;
       border-radius: 20px;
       transform: skew(324deg, 9deg) translateY(-9px);
@@ -24,7 +24,7 @@
 
     &_3 {
       width: 100%;
-      height: 115px;
+      height: 90px;
       background: #000000;
       border-radius: 20px;
       transform: skew(326deg, 1deg) translateY(9px);
@@ -33,7 +33,7 @@
 
     &_4 {
       width: 100%;
-      height: 115px;
+      height: 90px;
       background: #000000;
       border-radius: 20px;
       transform: skew(356deg, 7deg);

@@ -10,16 +10,16 @@ function WelcomeText() {
         <div className={styles.block__inner_2}></div>
         <div className={styles.block__inner_3}></div>
         <div className={styles.block__inner_4}></div>
-        <h2 className="text-white text-40 font-medium top-[102px] left-[37%] absolute">
+        <h2 className="text-white text-40 font-medium top-[50px] left-[37%] absolute">
           Hallo
         </h2>
-        <h2 className="text-white text-40 font-medium top-[189px] left-[16%] absolute w-[77%] text-center">
+        <h2 className="text-white text-40 font-medium top-[110px] left-[16%] absolute w-[77%] text-center">
           {personData.name}
         </h2>
-        <h2 className="text-white text-20 text-end top-[277px] left-[-10%] absolute w-[90%]">
+        <h2 className="text-white text-16 text-end top-[182px] left-[1%] absolute w-[90%]">
           Jouw mailbox kan volzitten met onbelangrijke e-mails
         </h2>
-        <h2 className="text-white text-20 text-start top-[364px] left-[5%] absolute w-[80%]">
+        <h2 className="text-white text-16 text-start top-[256px] left-[10%] absolute w-[80%]">
           Deze e-mails van jou hebben wel een effect op het CO2 uitstoot van de
           Google dataserver
         </h2>

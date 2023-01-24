@@ -10,7 +10,7 @@ body {
 }
 
 #root {
-  max-width: 620px;
+  /* max-width: 620px; */
   width: 100%;
   min-height: 100vh;
   height: 100%;
@@ -96,12 +96,21 @@ p {
   justify-content: center;
 }
 .bg-block-value {
-  width: 295px;
-  height: 91px;
+  width: 249px;
+  height: 80px;
   background: #000000;
   border-radius: 20px;
   transform: skew(326deg, 1deg) translateY(9px);
   border: 2px solid white;
+}
+
+.bg-block-value-party {
+  width: 330px;
+  height: 130px;
+  background: #000000;
+  border-radius: 20px;
+  transform: skew(326deg, 1deg) translateY(9px);
+  border: 6px solid white;
 }
 
 circle,

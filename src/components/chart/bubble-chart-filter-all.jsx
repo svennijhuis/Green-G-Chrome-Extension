@@ -22,7 +22,7 @@ function BubbelChartFilter() {
     visibility: "hidden",
   });
 
-  var diameter = 460;
+  var diameter = 400;
 
   useEffect(() => {
     if (valueAll) {

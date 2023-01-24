@@ -1283,7 +1283,12 @@
   "resolved" "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
   "version" "1.0.2"
 
-"vite@^4.0.0":
+"vite-plugin-environment@^1.1.3":
+  "integrity" "sha512-9LBhB0lx+2lXVBEWxFZC+WO7PKEyE/ykJ7EPWCq95NEcCpblxamTbs5Dm3DLBGzwODpJMEnzQywJU8fw6XGGGA=="
+  "resolved" "https://registry.npmjs.org/vite-plugin-environment/-/vite-plugin-environment-1.1.3.tgz"
+  "version" "1.1.3"
+
+"vite@^4.0.0", "vite@>= 2.7":
   "integrity" "sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw=="
   "resolved" "https://registry.npmjs.org/vite/-/vite-4.0.4.tgz"
   "version" "4.0.4"

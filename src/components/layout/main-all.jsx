@@ -31,19 +31,19 @@ function MainAll() {
 
   const removeData = async () => {
     const data = deleteMessagesId;
-    // await fetch(
-    //   "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       Authorization: "Bearer " + Cookies.get("keyFetch"),
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       ids: data,
-    //     }),
-    //   }
-    // );
+    await fetch(
+      "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + Cookies.get("keyFetch"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ids: data,
+        }),
+      }
+    );
     setParty("party");
   };
 
@@ -76,7 +76,7 @@ function MainAll() {
   return (
     <>
       <section className="flex flex-col items-center h-screen relative">
-        <h1 className="px-1 text-center text-50 leading-50 text-black relative z-10 effect mt-1">
+        <h1 className="px-1 text-center text-40 leading-40 text-black relative z-10 effect mt-1">
           {valueFilter}
         </h1>
         <div className="relative w-min h-min">
@@ -85,7 +85,7 @@ function MainAll() {
           <div className="absolute top-1/2 left-3  transform  -translate-y-1/2">
             <p className="text-white text-28 leading-28 text-bold text-start w-full">
               {count}
-              {count !== 0 ? " mails" : " mail"}
+              {deleteMessagesId.length > 1 ? " mails" : " mail"}
             </p>
             <p className="text-white text-28 leading-28  text-bold text-start w-full">
               {date}
@@ -93,10 +93,13 @@ function MainAll() {
           </div>
         </div>
         <BubbelChartFilter />
-        <button className="w-[350px]" onClick={() => setIsModalOpen(true)}>
-          <DeleteSelectie />
-        </button>
-        <button className="w-[200px]" onClick={removeFilterData}>
+        {deleteMessagesId.length > 0 && (
+          <button className="w-[280px]" onClick={() => setIsModalOpen(true)}>
+            <DeleteSelectie />
+          </button>
+        )}
+
+        <button className="w-[140px]" onClick={removeFilterData}>
           <Back />
         </button>
         <CarAnimation />
@@ -108,7 +111,8 @@ function MainAll() {
           <Modal>
             <div className="flex flex-col h-full ">
               <h2 className="text-white text-24 leading-24 text-bold text-center w-full pt-9 px-10">
-                {deleteMessagesId.length} mails verwijderen?
+                {deleteMessagesId.length}{" "}
+                {deleteMessagesId.length > 1 ? " mails" : " mail"} verwijderen?
               </h2>
               <div className="flex flex-row gap-2 justify-between px-3 mt-auto pb-6">
                 <button className="w-[200px] ml-2" onClick={closeModal}>

@@ -56,19 +56,19 @@ function MainFilter() {
   const removeData = async () => {
     const data = deleteMessagesId;
 
-    // await fetch(
-    //   "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       Authorization: "Bearer " + Cookies.get("keyFetch"),
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       ids: data,
-    //     }),
-    //   }
-    // );
+    await fetch(
+      "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + Cookies.get("keyFetch"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ids: data,
+        }),
+      }
+    );
     setParty("party");
   };
 
@@ -81,7 +81,7 @@ function MainFilter() {
   return (
     <>
       <section className="flex flex-col items-center h-screen relative">
-        <h1 className="px-1 text-center text-50 leading-50 text-black relative z-10 effect mt-1">
+        <h1 className="px-1 text-center text-40 leading-40 text-black relative z-10 effect mt-1">
           {valueFilter}
         </h1>
         <div className="relative w-min h-min">
@@ -97,10 +97,10 @@ function MainFilter() {
           </div>
         </div>
         <BubbelChartFilter />
-        <button className="w-[350px]" onClick={() => setIsModalOpen(true)}>
+        <button className="w-[280px]" onClick={() => setIsModalOpen(true)}>
           <Delete />
         </button>
-        <button className="w-[200px]" onClick={removeFilterData}>
+        <button className="w-[140px]" onClick={removeFilterData}>
           <Back />
         </button>
         <CarAnimation />

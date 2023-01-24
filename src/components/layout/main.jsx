@@ -7,11 +7,11 @@ import TitleStartScreen from "../svg/main-screen/title";
 function Main({ Co2InGram }) {
   return (
     <>
-      <section className="flex flex-col gap-3 items-center h-screen relative">
-        <div className="relative w-[350px] h-auto flex mt-4">
+      <section className="flex flex-col items-center h-screen relative">
+        <div className="relative w-[300px] h-auto flex mt-2">
           <TitleStartScreen />
         </div>
-        <h1 className="text-center text-50 leading-50 text-black relative z-[15] mb-[-30px] effect">
+        <h1 className="text-center text-40 leading-40 text-black relative z-[15] mb-1 effect">
           {Co2InGram} Gram CO2
         </h1>
 

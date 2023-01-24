@@ -346,13 +346,14 @@ function App() {
         ) : (
           <>
             <Confetti />
-            <div class="absolute bg-black/80 top-0 bottom-0 right-0 left-0 w-full h-full z-[12]"></div>
+            <div className="absolute bg-black/20 top-0 bottom-0 right-0 left-0 w-full h-full z-[12]"></div>
             <div className="relative w-min h-min mx-auto my-auto">
-              <div className="bg-block-value mx-auto mb-2 relative"></div>
+              <div className="bg-block-value-party mx-auto mb-2 relative"></div>
 
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[13]">
-                <h2 className="text-white text-28 leading-28 text-bold text-start w-full pr-1">
-                  {deleteMessagesId.length} mails verwijderd
+                <h2 className="text-white text-28 leading-28 text-bold text-center w-full pr-1">
+                  {deleteMessagesId.length}{" "}
+                  {deleteMessagesId.length > 1 ? " mails" : " mail"} verwijderd
                 </h2>
               </div>
             </div>

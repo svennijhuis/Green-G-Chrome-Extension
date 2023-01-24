@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 function BubbelChartFilter() {
   const { countedDate, setValueDate } = useDataContext();
   const [dataList, setDataList] = useState();
-  var diameter = 460;
+  var diameter = 400;
 
   useEffect(() => {
     var root = d3
