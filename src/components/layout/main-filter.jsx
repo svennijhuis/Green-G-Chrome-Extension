@@ -54,8 +54,6 @@ function MainFilter() {
   }, [data]);
 
   const removeData = async () => {
-    const data = deleteMessagesId;
-
     await fetch(
       "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
       {
@@ -65,7 +63,7 @@ function MainFilter() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ids: data,
+          ids: deleteMessagesId,
         }),
       }
     );

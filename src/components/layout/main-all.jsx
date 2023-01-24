@@ -30,7 +30,6 @@ function MainAll() {
   const [count, setCount] = useState();
 
   const removeData = async () => {
-    const data = deleteMessagesId;
     await fetch(
       "https://gmail.googleapis.com/gmail/v1/users/me/messages/batchDelete",
       {
@@ -40,7 +39,7 @@ function MainAll() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ids: data,
+          ids: deleteMessagesId,
         }),
       }
     );
