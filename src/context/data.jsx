@@ -61,7 +61,7 @@ const DataProvider = ({ children }) => {
     const messageIds = data.messages.map(({ id }) => id);
     collection = [...collection, ...messageIds];
 
-    if (data.nextPageToken && collection.length <= 100) {
+    if (data.nextPageToken && collection.length <= 1000) {
       return getMessageIds(data.nextPageToken, collection);
     }
 
