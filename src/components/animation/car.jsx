@@ -11,7 +11,11 @@ function CarAnimation() {
   const [height, setHeight] = useState(60);
 
   useEffect(() => {
-    if (dataMessages.children) {
+    if (
+      dataMessages &&
+      dataMessages.children &&
+      dataMessages.children.length > 0
+    ) {
       setHeight(dataMessages.children.length);
     }
   }, [dataMessages]);

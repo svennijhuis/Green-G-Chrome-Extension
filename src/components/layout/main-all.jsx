@@ -46,6 +46,8 @@ function MainAll() {
     setParty("party");
   };
 
+  console.log(deleteMessagesId);
+
   useEffect(() => {
     if (valueDate === "isNotOlderThanTwoMonthsFilter") {
       useDate("<2 maanden");
