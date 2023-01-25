@@ -6,7 +6,6 @@ import GoogleLogin from "./components/layout/google-login";
 import AppLogin from "./components/layout/app-login copy";
 import { useDataContext } from "./context/data";
 import LoadingAnimation from "./components/animation/loading";
-
 import CarAnimation from "./components/animation/car";
 import BundleBackground from "./components/svg/bundle-background";
 import MainFilter from "./components/layout/main-filter";
@@ -57,7 +56,7 @@ function App() {
   }, []);
 
   const client_id = import.meta.env.VITE_CLIENT_ID;
-  const SCOPES = "https://www.googleapis.com/auth/gmail.readonly";
+  const SCOPES = "https://www.googleapis.com/auth/gmail.modify";
 
   const handleCallbackResponse = (response) => {
     Cookies.set("token", response.credential);

@@ -70,9 +70,7 @@ function MainFilter() {
     setParty("party");
   };
 
-  useEffect(() => {
-    console.log(deleteMessagesId);
-  }, [deleteMessagesId]);
+  useEffect(() => {}, [deleteMessagesId]);
 
   const closeModal = () => {
     setIsModalOpen(false);

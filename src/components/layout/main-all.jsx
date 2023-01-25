@@ -77,6 +77,16 @@ function MainAll() {
   return (
     <>
       <section className="flex flex-col items-center h-screen relative">
+        <div className="absolute left-1 top-1">
+          <div className="flex flex-row items-center">
+            <span className="block w-1 h-1 bg-red-600 mr-1 rounded-full"></span>
+            <p className="text-14 font-medium">Delete</p>
+          </div>
+          <div className="flex flex-row items-center">
+            <span className="block w-1 h-1 bg-green-600 mr-1 rounded-full"></span>
+            <p className="text-14 font-medium">Bewaren</p>
+          </div>
+        </div>
         <h1 className="px-1 text-center text-40 leading-40 text-black relative z-10 effect mt-1">
           {valueFilter}
         </h1>
@@ -100,7 +110,7 @@ function MainAll() {
           </button>
         )}
 
-        <button className="w-[140px]" onClick={removeFilterData}>
+        <button className="w-[140px] mt-[5px]" onClick={removeFilterData}>
           <Back />
         </button>
         <CarAnimation />

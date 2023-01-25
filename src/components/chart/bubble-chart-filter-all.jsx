@@ -139,23 +139,16 @@ function BubbelChartFilter() {
               <circle
                 onMouseLeave={handleHoverOff}
                 r={item.r}
-                stroke={
-                  stroke.includes(item.data.id)
-                    ? "rgb(46, 73, 123)"
-                    : "#363f8ab3"
-                }
+                stroke={stroke.includes(item.data.id) ? "red" : "green"}
                 strokeWidth="3"
-                fill={
-                  stroke.includes(item.data.id)
-                    ? "rgb(46, 73, 123)"
-                    : "#363f8ab3"
-                }
+                fill="rgb(46, 73, 123)"
               />
             </g>
           </g>
         ))}
       </svg>
       <div
+        onMouseOver={handleHoverOff}
         style={divStyle}
         className="flex flex-col bg-black p-2 w-[275px] rounded-lg border-black border-2 absolute transition-opacity"
       >

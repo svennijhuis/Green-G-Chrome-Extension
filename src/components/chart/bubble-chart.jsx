@@ -152,6 +152,7 @@ function BubbleChart() {
         ))}
       </svg>
       <div
+        onMouseOver={handleHoverOff}
         style={divStyle}
         className="flex flex-col bg-black p-2 w-[250px] rounded-lg z-[101] border-white border-2 absolute transition"
       >
